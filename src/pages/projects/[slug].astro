@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((p) => ({ params: { slug: p.slug }, props: { entry: p } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout title={`${entry.data.title} — Larissa Böhm`}>
+  <a href={`${import.meta.env.BASE_URL}projects`} class="font-mono text-xs text-muted hover:text-accent">&larr; projects</a>
+
+  <h1 class="font-display text-2xl md:text-3xl text-ink mt-4">{entry.data.title}</h1>
+  <p class="font-mono text-xs text-muted mt-2">{entry.data.status}</p>
+
+  <div class="flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs text-accent mt-4">
+    {entry.data.stack.map((s: string) => <span>{s}</span>)}
+  </div>
+
+  {entry.data.metrics && entry.data.metrics.length > 0 && (
+    <ul class="font-mono text-xs text-muted flex flex-col gap-1 mt-4 border-l-2 border-line pl-4">
+      {entry.data.metrics.map((m: string) => <li>{m}</li>)}
+    </ul>
+  )}
+
+  <article class="prose prose-invert prose-headings:font-display prose-p:text-ink/90 mt-10 max-w-none">
+    <Content />
+  </article>
+
+  {entry.data.repoUrl && (
+    <a href={entry.data.repoUrl} class="inline-block mt-10 font-mono text-sm text-accent hover:underline">
+      view repository
+    </a>
+  )}
+</BaseLayout>

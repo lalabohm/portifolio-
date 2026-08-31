@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const writeups = (await getCollection('writeups'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const highlights = [
+  {
+    title: 'BSides Fortaleza',
+    description: 'A CTF from Hackathon Cariri — placed 2nd.',
+    href: 'https://lnkd.in/p/dBHBr-Ee',
+  },
+  {
+    title: 'IEEE Cybersecurity Hackathon 2026',
+    description: '2nd place in Capture The Flag among 25 teams.',
+    href: 'https://lnkd.in/p/dk-6PHk4',
+  },
+  {
+    title: 'Capture The Flag IDP 2025',
+    description: 'Hosted by the Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP) — a 24-hour event.',
+    href: 'https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_ctf-capturetheflag-hackathon-activity-7394708159493308416-O5h8?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0',
+  },
+  {
+    title: 'Capture The Flag IDP 2024',
+    description: 'Hosted by the Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP) — a 24-hour event.',
+    href: 'https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_o-hackathon-em-formato-capture-the-flag-foi-activity-7274440185822498817-O2rA?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0',
+  },
+  {
+    title: 'Hackathon IDP 2024',
+    description: 'Digital transformation through education software.',
+    href: 'https://www.linkedin.com/posts/lucas-barreto-31017227b_continuando-as-postagens-do-evento-hackathon-ugcPost-7202148012133912576-M9p6?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0',
+  },
+];
+---
+
+<BaseLayout title="CTF and Hackathons — Larissa Böhm">
+  <h1 class="font-display text-2xl text-ink mb-8">CTF and Hackathons</h1>
+
+  <div class="mb-8">
+    {highlights.map((h) => (
+      <a href={h.href} target="_blank" rel="noopener noreferrer" class="group block border-t border-line py-6 no-underline">
+        <h3 class="font-display text-lg text-ink group-hover:text-accent transition-colors">
+          {h.title}
+        </h3>
+        {h.description && <p class="text-muted mt-1 leading-relaxed">{h.description}</p>}
+      </a>
+    ))}
+  </div>
+
+  <div>
+    {writeups.map((w) => (
+      <a href={`${import.meta.env.BASE_URL}ctf/${w.slug}`} class="group block border-t border-line py-6 no-underline">
+        <div class="flex items-baseline justify-between gap-4">
+          <h3 class="font-display text-lg text-ink group-hover:text-accent transition-colors">
+            {w.data.title}
+          </h3>
+          <span class="font-mono text-xs text-muted whitespace-nowrap">{w.data.category}</span>
+        </div>
+        <p class="font-mono text-xs text-muted mt-1">{w.data.event}</p>
+      </a>
+    ))}
+  </div>
+</BaseLayout>
