@@ -1,11 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectEntry from '../components/ProjectEntry.astro';
-import { getCollection } from 'astro:content';
+import BilingualProjectEntry from '../components/BilingualProjectEntry.astro';
+import { getProjectPairs } from '../lib/projects';
 
-const projects = (await getCollection('projects'))
-  .filter((p) => p.data.featured)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const pairs = (await getProjectPairs()).filter((p) => p.en.data.featured);
 ---
 
 <BaseLayout title="Larissa Böhm — Portfolio">
@@ -14,8 +12,11 @@ const projects = (await getCollection('projects'))
       <h1 class="font-display text-3xl md:text-4xl text-ink leading-tight">
         Larissa Böhm<span class="text-accent">.</span>
       </h1>
-      <p class="text-base text-gray-500 mt-4 leading-relaxed">
+      <p class="text-base text-gray-500 mt-4 leading-relaxed" data-i18n="en">
         I focus on LLM security, agent architectures, and adversarial machine learning.
+      </p>
+      <p class="text-base text-gray-500 mt-4 leading-relaxed" data-i18n="pt">
+        Foco em segurança de LLMs, arquiteturas de agentes e aprendizado de máquina adversarial.
       </p>
     </div>
     <img
@@ -26,42 +27,54 @@ const projects = (await getCollection('projects'))
   </section>
 
   <section class="mb-16">
-    <h2 class="font-mono text-lg text-muted uppercase tracking-wide mb-2">About me</h2>
-    <p class="text-white text-lg max-w-xl leading-relaxed">
+    <h2 class="font-mono text-lg text-muted uppercase tracking-wide mb-2" data-i18n="en">About me</h2>
+    <h2 class="font-mono text-lg text-muted uppercase tracking-wide mb-2" data-i18n="pt">Sobre mim</h2>
+    <p class="text-white text-lg max-w-xl leading-relaxed" data-i18n="en">
       Computer Science student at <a href="https://www.idp.edu.br/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">IDP</a>, currently an intern at the Engineering
       Coordination of <a href="https://www.gov.br/cnpq" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">CNPq</a>, a Brazilian federal government agency. I work
       with ETL and contribute to initiatives focused on innovation with
       artificial intelligence.
     </p>
+    <p class="text-white text-lg max-w-xl leading-relaxed" data-i18n="pt">
+      Estudante de Ciência da Computação no <a href="https://www.idp.edu.br/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">IDP</a>, atualmente estagiária na
+      Coordenação de Engenharia do <a href="https://www.gov.br/cnpq" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">CNPq</a>, órgão do governo federal brasileiro.
+      Trabalho com ETL e contribuo com iniciativas voltadas à inovação em
+      inteligência artificial.
+    </p>
   </section>
 
   <section class="mb-16">
-    <h2 class="font-mono text-xs text-muted uppercase tracking-wide mb-2">Experience</h2>
-    <p class="text-muted max-w-xl leading-relaxed">
-      Intern, Engineering Coordination × <a href="https://www.gov.br/cnpq" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">CNPq</a>
-    </p>
-    <p class="text-muted max-w-xl leading-relaxed mt-2">
-      Developer, Sprint IDP × BYD — <a href="https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_sprintidp-tecnologia-inovaaexaeto-activity-7350540861073436673-9of5?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">read more</a>
-    </p>
-    <p class="text-muted max-w-xl leading-relaxed mt-2">
-      Participant, Innovation Hub × IDP — <a href="https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_participar-do-hub-de-inova%C3%A7%C3%A3o-foi-uma-oportunidade-activity-7263250077865963521-PFAw?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">read more</a>
-    </p>
+    <h2 class="font-mono text-xs text-muted uppercase tracking-wide mb-2" data-i18n="en">Experience</h2>
+    <h2 class="font-mono text-xs text-muted uppercase tracking-wide mb-2" data-i18n="pt">Experiência</h2>
+    <div data-i18n="en">
+      <p class="text-muted max-w-xl leading-relaxed">
+        Intern, Engineering Coordination × <a href="https://www.gov.br/cnpq" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">CNPq</a>
+      </p>
+      <p class="text-muted max-w-xl leading-relaxed mt-2">
+        Developer, Sprint IDP × BYD — <a href="https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_sprintidp-tecnologia-inovaaexaeto-activity-7350540861073436673-9of5?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">read more</a>
+      </p>
+      <p class="text-muted max-w-xl leading-relaxed mt-2">
+        Participant, Innovation Hub × IDP — <a href="https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_participar-do-hub-de-inova%C3%A7%C3%A3o-foi-uma-oportunidade-activity-7263250077865963521-PFAw?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">read more</a>
+      </p>
+    </div>
+    <div data-i18n="pt">
+      <p class="text-muted max-w-xl leading-relaxed">
+        Estagiária, Coordenação de Engenharia × <a href="https://www.gov.br/cnpq" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">CNPq</a>
+      </p>
+      <p class="text-muted max-w-xl leading-relaxed mt-2">
+        Desenvolvedora, Sprint IDP × BYD — <a href="https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_sprintidp-tecnologia-inovaaexaeto-activity-7350540861073436673-9of5?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">saiba mais</a>
+      </p>
+      <p class="text-muted max-w-xl leading-relaxed mt-2">
+        Participante, Hub de Inovação × IDP — <a href="https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_participar-do-hub-de-inova%C3%A7%C3%A3o-foi-uma-oportunidade-activity-7263250077865963521-PFAw?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">saiba mais</a>
+      </p>
+    </div>
   </section>
 
   <section>
-    <h2 class="font-mono text-xs text-muted uppercase tracking-wide mb-2">Featured projects</h2>
+    <h2 class="font-mono text-xs text-muted uppercase tracking-wide mb-2" data-i18n="en">Featured projects</h2>
+    <h2 class="font-mono text-xs text-muted uppercase tracking-wide mb-2" data-i18n="pt">Projetos em destaque</h2>
     <div>
-      {projects.map((p) => (
-        <ProjectEntry
-          title={p.data.title}
-          summary={p.data.summary}
-          stack={p.data.stack}
-          status={p.data.status}
-          metrics={p.data.metrics}
-          repoUrl={p.data.repoUrl}
-          href={`${import.meta.env.BASE_URL}projects/${p.slug}`}
-        />
-      ))}
+      {pairs.map((pair) => <BilingualProjectEntry pair={pair} />)}
     </div>
   </section>
 </BaseLayout>

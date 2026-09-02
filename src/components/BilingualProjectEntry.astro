@@ -1,0 +1,37 @@
+---
+import ProjectEntry from './ProjectEntry.astro';
+import { STATUS_LABEL, type ProjectPair } from '../lib/projects';
+
+interface Props {
+  pair: ProjectPair;
+}
+
+const { pair } = Astro.props;
+const enData = pair.en.data;
+const ptData = pair.pt?.data ?? enData;
+const status = STATUS_LABEL[enData.status] ?? { en: enData.status, pt: enData.status };
+const href = `${import.meta.env.BASE_URL}projects/${pair.slug}`;
+---
+
+<div data-i18n="en">
+  <ProjectEntry
+    title={enData.title}
+    summary={enData.summary}
+    stack={enData.stack}
+    status={status.en}
+    metrics={enData.metrics}
+    repoUrl={enData.repoUrl}
+    href={href}
+  />
+</div>
+<div data-i18n="pt">
+  <ProjectEntry
+    title={ptData.title}
+    summary={ptData.summary}
+    stack={ptData.stack}
+    status={status.pt}
+    metrics={ptData.metrics}
+    repoUrl={ptData.repoUrl}
+    href={href}
+  />
+</div>

@@ -39,27 +39,6 @@ pangeia/
 
 ---
 
-## Quick start
-
-```bash
-python -m venv .venv
-source .venv/bin/activate            # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-
-# 1) main evaluation (baseline + latency + robustness)
-python evaluation/evaluate_defense.py
-
-# 2) interactive dashboard
-streamlit run dashboard/app.py
-
-# 3) individual attacks (optional; reproduce the robustness tables)
-python attacks/spsa.py 50
-python attacks/hopskipjump.py 25
-python attacks/boundary.py 20
-```
-
----
-
 ## Measured results
 
 **Defense on clean traffic:** 99.94% baseline preservation (no false positives),
@@ -72,8 +51,6 @@ plus a PGD epsilon sweep (500→100k) — all 0% evasion. See
 Gradient-free attacks fail too, ruling out gradient masking (Athalye et al. 2018).
 Robustness stems from the restricted threat space (*realizability*): the decisive
 SYN Flood features cannot be forged without breaking the attack.
-
----
 
 ## References
 

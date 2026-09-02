@@ -8,34 +8,41 @@ const writeups = (await getCollection('writeups'))
 const highlights = [
   {
     title: 'BSides Fortaleza',
-    description: 'A CTF from Hackathon Cariri — placed 2nd.',
+    description: { en: 'A CTF from Hackathon Cariri — placed 2nd.', pt: 'Um CTF do Hackathon Cariri — 2º lugar.' },
     href: 'https://lnkd.in/p/dBHBr-Ee',
   },
   {
     title: 'IEEE Cybersecurity Hackathon 2026',
-    description: '2nd place in Capture The Flag among 25 teams.',
+    description: { en: '2nd place in Capture The Flag among 25 teams.', pt: '2º lugar no Capture The Flag entre 25 equipes.' },
     href: 'https://lnkd.in/p/dk-6PHk4',
   },
   {
     title: 'Capture The Flag IDP 2025',
-    description: 'Hosted by the Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP) — a 24-hour event.',
+    description: {
+      en: 'Hosted by the Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP) — a 24-hour event.',
+      pt: 'Promovido pelo Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP) — um evento de 24 horas.',
+    },
     href: 'https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_ctf-capturetheflag-hackathon-activity-7394708159493308416-O5h8?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0',
   },
   {
     title: 'Capture The Flag IDP 2024',
-    description: 'Hosted by the Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP) — a 24-hour event.',
+    description: {
+      en: 'Hosted by the Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP) — a 24-hour event.',
+      pt: 'Promovido pelo Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP) — um evento de 24 horas.',
+    },
     href: 'https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_o-hackathon-em-formato-capture-the-flag-foi-activity-7274440185822498817-O2rA?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0',
   },
   {
     title: 'Hackathon IDP 2024',
-    description: 'Digital transformation through education software.',
+    description: { en: 'Digital transformation through education software.', pt: 'Transformação digital por meio de software educacional.' },
     href: 'https://www.linkedin.com/posts/lucas-barreto-31017227b_continuando-as-postagens-do-evento-hackathon-ugcPost-7202148012133912576-M9p6?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0',
   },
 ];
 ---
 
 <BaseLayout title="CTF and Hackathons — Larissa Böhm">
-  <h1 class="font-display text-2xl text-ink mb-8">CTF and Hackathons</h1>
+  <h1 class="font-display text-2xl text-ink mb-8" data-i18n="en">CTF and Hackathons</h1>
+  <h1 class="font-display text-2xl text-ink mb-8" data-i18n="pt">CTF e Hackathons</h1>
 
   <div class="mb-8">
     {highlights.map((h) => (
@@ -43,7 +50,12 @@ const highlights = [
         <h3 class="font-display text-lg text-ink group-hover:text-accent transition-colors">
           {h.title}
         </h3>
-        {h.description && <p class="text-muted mt-1 leading-relaxed">{h.description}</p>}
+        {h.description && (
+          <>
+            <p class="text-muted mt-1 leading-relaxed" data-i18n="en">{h.description.en}</p>
+            <p class="text-muted mt-1 leading-relaxed" data-i18n="pt">{h.description.pt}</p>
+          </>
+        )}
       </a>
     ))}
   </div>

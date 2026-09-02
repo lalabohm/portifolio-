@@ -26,4 +26,18 @@ const writeups = defineCollection({
   }),
 });
 
-export const collections = { projects, writeups };
+const trajetoria = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    org: z.string(),
+    type: z.enum(['profissional', 'pesquisa', 'extensao']),
+    role: z.string(),
+    dateStart: z.date(),
+    dateEnd: z.date().nullable().optional(), // null/ausente = "atual"
+    summary: z.string(),
+    link: z.string().url().optional(),
+  }),
+});
+
+export const collections = { projects, writeups, trajetoria };

@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { TYPE_LABEL, formatDate } from '../../lib/trajetoria';
+
+const entries = (await getCollection('trajetoria'))
+  .sort((a, b) => b.data.dateStart.valueOf() - a.data.dateStart.valueOf());
+---
+
+<BaseLayout title="Trajetória — Larissa Böhm">
+  <h1 class="font-display text-2xl text-ink mb-8">Trajetória</h1>
+
+  <div>
+    {entries.map((entry) => (
+      <div class="flex gap-6 border-t border-line py-6">
+        <div class="w-28 shrink-0 font-mono text-xs text-muted">
+          <div>{formatDate(entry.data.dateStart)}</div>
+          <div>{entry.data.dateEnd ? formatDate(entry.data.dateEnd) : 'Atual'}</div>
+          <span class="inline-block font-mono text-[10px] uppercase tracking-wide text-accent border border-line px-1.5 py-0.5 mt-2">
+            {TYPE_LABEL[entry.data.type]}
+          </span>
+        </div>
+        <div class="flex-1">
+          <a href={`${import.meta.env.BASE_URL}trajetoria/${entry.slug}`} class="no-underline">
+            <h3 class="font-display text-lg text-ink hover:text-accent transition-colors">
+              {entry.data.title} <span class="text-accent">· {entry.data.org}</span>
+            </h3>
+          </a>
+          <p class="font-mono text-xs text-muted mt-1">{entry.data.role}</p>
+          <p class="text-muted mt-2 leading-relaxed">{entry.data.summary}</p>
+          {entry.data.link && (
+            <a href={entry.data.link} target="_blank" rel="noopener noreferrer" class="inline-block mt-2 font-mono text-sm text-accent hover:underline">
+              ver reel &rarr;
+            </a>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</BaseLayout>

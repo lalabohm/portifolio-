@@ -17,3 +17,27 @@ body {
   background-color: #C9A15A;
   color: #0F1214;
 }
+
+.prose h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose h3 {
+  font-size: 1.25em;
+  font-weight: 700;
+  margin-top: 1.25em;
+  margin-bottom: 0.5em;
+}
+
+/* i18n: EN/PT toggle. Default (no data-lang yet, i.e. before the head
+   script runs) shows English so there's a sane server-rendered fallback. */
+html:not([data-lang='pt']) [data-i18n='pt'] {
+  display: none;
+}
+
+html[data-lang='pt'] [data-i18n='en'] {
+  display: none;
+}

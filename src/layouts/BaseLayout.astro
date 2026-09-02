@@ -19,6 +19,18 @@ const { title, description = 'Technical portfolio — offensive security, LLM/ag
     <meta name="description" content={description} />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('portfolio-lang');
+          var lang = stored === 'en' || stored === 'pt'
+            ? stored
+            : ((navigator.language || '').toLowerCase().indexOf('pt') === 0 ? 'pt' : 'en');
+          document.documentElement.setAttribute('data-lang', lang);
+          document.documentElement.lang = lang;
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body class="font-body min-h-screen flex flex-col">
     <Header />
