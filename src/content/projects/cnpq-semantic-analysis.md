@@ -12,6 +12,10 @@ featured: false
 
 **Status:** In progress
 
+**Focus:** semantic embeddings, dimensionality reduction, unsupervised
+clustering, interactive data visualization, security and data
+governance in the public sector.
+
 **Technologies:** Python · UMAP · HDBSCAN · K-Means · PCA · Plotly · Pandas
 
 ## Context
@@ -24,4 +28,4 @@ featured: false
 
 Development of a data science pipeline for thematic clustering of research projects funded by CNPq, based on semantic embeddings generated with the BGE-M3 model. The project involves dimensionality reduction (PCA, UMAP) and unsupervised clustering (K-Means, HDBSCAN) to identify thematic groupings among thousands of research projects, followed by cluster interpretation and interactive visualization of the results.
 
-All work is conducted in a restricted environment (local JupyterLab, without unrestricted internet access), requiring solutions adapted to infrastructure constraints.
+All work is conducted in a restricted environment (local JupyterLab, without unrestricted internet access), requiring solutions adapted to infrastructure constraints, demonstrating alignment with security and data governance best practices in the public sector.
