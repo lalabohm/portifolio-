@@ -3,7 +3,7 @@ title: "Ramo Estudantil IEEE — IDP"
 org: "IEEE / IDP"
 type: extensao
 role: "Membro"
-dateStart: 2024-08-01
+dateStart: 2025-01-01
 summary: "Membro do Ramo Estudantil IEEE do IDP, atuando também nos grupos IES e WIE dentro do ramo."
 ---
 

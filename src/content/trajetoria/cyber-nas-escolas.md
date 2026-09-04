@@ -3,7 +3,7 @@ title: "Cyber nas Escolas"
 org: "CtrlAlt+Delas × Instituto Gabriel Gastal"
 type: extensao
 role: "Desenvolvedora de conteúdo"
-dateStart: 2025-04-01
+dateStart: 2026-07-01
 summary: "Projeto de educação em cibersegurança para escolas, desenvolvido pelo CtrlAlt+Delas em parceria com o Instituto Gabriel Gastal."
 link: "https://www.instagram.com/reel/DctbO_JFOLK/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA=="
 ---

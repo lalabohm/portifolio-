@@ -3,7 +3,7 @@ title: "CtrlAlt+Delas"
 org: "IDP"
 type: extensao
 role: "Membro"
-dateStart: 2025-03-01
+dateStart: 2025-05-01
 summary: "Grupo de mulheres em tecnologia do IDP com foco em educação em cibersegurança e representatividade na área."
 ---
 

@@ -21,7 +21,8 @@ const status = STATUS_LABEL[enData.status] ?? { en: enData.status, pt: enData.st
   <a href={`${import.meta.env.BASE_URL}projects`} class="font-mono text-xs text-muted hover:text-accent" data-i18n="en">&larr; projects</a>
   <a href={`${import.meta.env.BASE_URL}projects`} class="font-mono text-xs text-muted hover:text-accent" data-i18n="pt">&larr; projetos</a>
 
-  <h1 class="font-display text-2xl md:text-3xl text-ink mt-4">{enData.title}</h1>
+  <h1 class="font-display text-2xl md:text-3xl text-ink mt-4" data-i18n="en">{enData.title}</h1>
+  <h1 class="font-display text-2xl md:text-3xl text-ink mt-4" data-i18n="pt">{ptData.title}</h1>
   <p class="font-mono text-xs text-muted mt-2" data-i18n="en">{status.en}</p>
   <p class="font-mono text-xs text-muted mt-2" data-i18n="pt">{status.pt}</p>
 
