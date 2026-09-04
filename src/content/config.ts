@@ -31,12 +31,14 @@ const trajetoria = defineCollection({
   schema: z.object({
     title: z.string(),
     org: z.string(),
-    type: z.enum(['profissional', 'pesquisa', 'extensao']),
+    type: z.enum(['profissional', 'pesquisa', 'extensao', 'voluntariado']),
     role: z.string(),
     dateStart: z.date(),
     dateEnd: z.date().nullable().optional(), // null/ausente = "atual"
+    datePrecision: z.enum(['month', 'year']).default('month'), // 'year' quando o mês exato é desconhecido
     summary: z.string(),
     link: z.string().url().optional(),
+    projectSlug: z.string().optional(), // when set, links to /projects/{slug} instead of its own detail page
   }),
 });
 

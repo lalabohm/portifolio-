@@ -1,12 +1,13 @@
 ---
-title: "Ramo Estudantil IEEE — IDP"
+title: "IEEE Student Branch — IDP"
 org: "IEEE / IDP"
 type: extensao
-role: "Membro"
+role: "Member"
 dateStart: 2025-01-01
-summary: "Membro do Ramo Estudantil IEEE do IDP, atuando também nos grupos IES e WIE dentro do ramo."
+datePrecision: year
+summary: "Member of IDP's IEEE Student Branch, also active in the branch's IES and WIE groups."
 ---
 
-_Conteúdo em construção._ Detalhar aqui as atividades e eventos organizados
-pelo ramo, e a participação nas iniciativas dos grupos IES (Industry
-Engagement Sector) e WIE (Women in Engineering).
+_Content in progress._ Detail here the activities and events organized by
+the branch, and participation in the initiatives of the IES (Industry
+Engagement Sector) and WIE (Women in Engineering) groups.

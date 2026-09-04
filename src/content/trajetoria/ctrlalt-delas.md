@@ -2,12 +2,12 @@
 title: "CtrlAlt+Delas"
 org: "IDP"
 type: extensao
-role: "Membro"
+role: "Member & Marketing"
 dateStart: 2025-05-01
-summary: "Grupo de mulheres em tecnologia do IDP com foco em educação em cibersegurança e representatividade na área."
+summary: "IDP's group of women in technology focused on cybersecurity education and representation in the field."
 ---
 
-Grupo de mulheres em tecnologia do IDP dedicado a educação em cibersegurança
-e representatividade de mulheres na área de tecnologia. Um dos projetos
-desenvolvidos pelo grupo é o [Cyber nas Escolas](../cyber-nas-escolas/), em
-parceria com o Instituto Gabriel Gastal.
+IDP's group of women in technology dedicated to cybersecurity education
+and the representation of women in the technology field. One of the
+projects developed by the group is [Cyber nas Escolas](../cyber-nas-escolas/),
+in partnership with Instituto Gabriel Gastal.

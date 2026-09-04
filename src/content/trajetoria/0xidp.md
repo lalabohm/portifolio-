@@ -2,10 +2,10 @@
 title: "0xIDP"
 org: "IDP"
 type: extensao
-role: "Membro"
+role: "Member"
 dateStart: 2026-08-01
-summary: "Liga de CTF do IDP, criada em 2026. Participei representando a liga em um CTF internacional do IEEE e no Hack in Cariri."
+summary: "IDP's CTF league, created in 2026. I participated representing the league in an international IEEE CTF and at Hack in Cariri."
 ---
 
-0xIDP é a liga de Capture The Flag do IDP, criada em 2026. Participei
-representando a liga em um CTF internacional do IEEE e no Hack in Cariri.
+0xIDP is IDP's Capture The Flag league, created in 2026. I participated
+representing the league in an international IEEE CTF and at Hack in Cariri.

@@ -1,40 +1,73 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { TYPE_LABEL, formatDate } from '../../lib/trajetoria';
+import { getTrajetoriaPairs, TYPE_LABEL, formatDate, CURRENT_LABEL } from '../../lib/trajetoria';
 
-const entries = (await getCollection('trajetoria'))
-  .sort((a, b) => b.data.dateStart.valueOf() - a.data.dateStart.valueOf());
+const pairs = await getTrajetoriaPairs();
 ---
 
 <BaseLayout title="Trajetória — Larissa Böhm">
-  <h1 class="font-display text-2xl text-ink mb-8">Trajetória</h1>
+  <h1 class="font-display text-2xl text-ink" data-i18n="en">Journey</h1>
+  <h1 class="font-display text-2xl text-ink" data-i18n="pt">Trajetória</h1>
+  <p class="font-mono text-xs text-muted uppercase tracking-wide mt-1 mb-8" data-i18n="en">Computer Science undergraduate</p>
+  <p class="font-mono text-xs text-muted uppercase tracking-wide mt-1 mb-8" data-i18n="pt">Graduando em Ciência da Computação</p>
 
   <div>
-    {entries.map((entry) => (
-      <div class="flex gap-6 border-t border-line py-6">
-        <div class="w-28 shrink-0 font-mono text-xs text-muted">
-          <div>{formatDate(entry.data.dateStart)}</div>
-          <div>{entry.data.dateEnd ? formatDate(entry.data.dateEnd) : 'Atual'}</div>
-          <span class="inline-block font-mono text-[10px] uppercase tracking-wide text-accent border border-line px-1.5 py-0.5 mt-2">
-            {TYPE_LABEL[entry.data.type]}
-          </span>
-        </div>
-        <div class="flex-1">
-          <a href={`${import.meta.env.BASE_URL}trajetoria/${entry.slug}`} class="no-underline">
-            <h3 class="font-display text-lg text-ink hover:text-accent transition-colors">
-              {entry.data.title} <span class="text-accent">· {entry.data.org}</span>
-            </h3>
-          </a>
-          <p class="font-mono text-xs text-muted mt-1">{entry.data.role}</p>
-          <p class="text-muted mt-2 leading-relaxed">{entry.data.summary}</p>
-          {entry.data.link && (
-            <a href={entry.data.link} target="_blank" rel="noopener noreferrer" class="inline-block mt-2 font-mono text-sm text-accent hover:underline">
-              ver reel &rarr;
+    {pairs.map((pair) => {
+      const enData = pair.en.data;
+      const ptData = pair.pt?.data ?? enData;
+      const type = TYPE_LABEL[enData.type] ?? { en: enData.type, pt: enData.type };
+      const href = `${import.meta.env.BASE_URL}${enData.projectSlug ? `projects/${enData.projectSlug}` : `trajetoria/${pair.slug}`}`;
+
+      return (
+        <div class="flex gap-6 border-t border-line py-6">
+          <div class="w-28 shrink-0 font-mono text-xs text-muted">
+            <div data-i18n="en">{formatDate(enData.dateStart, 'en', enData.datePrecision)}</div>
+            <div data-i18n="pt">{formatDate(ptData.dateStart, 'pt', ptData.datePrecision)}</div>
+            {(() => {
+              const startEn = formatDate(enData.dateStart, 'en', enData.datePrecision);
+              const endEn = enData.dateEnd ? formatDate(enData.dateEnd, 'en', enData.datePrecision) : CURRENT_LABEL.en;
+              const startPt = formatDate(ptData.dateStart, 'pt', ptData.datePrecision);
+              const endPt = ptData.dateEnd ? formatDate(ptData.dateEnd, 'pt', ptData.datePrecision) : CURRENT_LABEL.pt;
+              return (
+                <>
+                  {endEn !== startEn && <div data-i18n="en">{endEn}</div>}
+                  {endPt !== startPt && <div data-i18n="pt">{endPt}</div>}
+                </>
+              );
+            })()}
+            <span class="inline-block font-mono text-[10px] uppercase tracking-wide text-accent border border-line px-1.5 py-0.5 mt-2" data-i18n="en">
+              {type.en}
+            </span>
+            <span class="inline-block font-mono text-[10px] uppercase tracking-wide text-accent border border-line px-1.5 py-0.5 mt-2" data-i18n="pt">
+              {type.pt}
+            </span>
+          </div>
+          <div class="flex-1">
+            <a href={href} class="no-underline">
+              <h3 class="font-display text-lg text-ink hover:text-accent transition-colors" data-i18n="en">
+                {enData.title} <span class="text-accent">· {enData.org}</span>
+              </h3>
+              <h3 class="font-display text-lg text-ink hover:text-accent transition-colors" data-i18n="pt">
+                {ptData.title} <span class="text-accent">· {ptData.org}</span>
+              </h3>
             </a>
-          )}
+            <p class="font-mono text-xs text-muted mt-1" data-i18n="en">{enData.role}</p>
+            <p class="font-mono text-xs text-muted mt-1" data-i18n="pt">{ptData.role}</p>
+            <p class="text-muted mt-2 leading-relaxed" data-i18n="en">{enData.summary}</p>
+            <p class="text-muted mt-2 leading-relaxed" data-i18n="pt">{ptData.summary}</p>
+            {enData.link && (
+              <a href={enData.link} target="_blank" rel="noopener noreferrer" class="inline-block mt-2 font-mono text-sm text-accent hover:underline" data-i18n="en">
+                read more &rarr;
+              </a>
+            )}
+            {ptData.link && (
+              <a href={ptData.link} target="_blank" rel="noopener noreferrer" class="inline-block mt-2 font-mono text-sm text-accent hover:underline" data-i18n="pt">
+                saiba mais &rarr;
+              </a>
+            )}
+          </div>
         </div>
-      </div>
-    ))}
+      );
+    })}
   </div>
 </BaseLayout>

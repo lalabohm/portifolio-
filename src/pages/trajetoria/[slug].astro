@@ -1,37 +1,66 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { TYPE_LABEL, formatDate } from '../../lib/trajetoria';
+import { getTrajetoriaPairs, TYPE_LABEL, formatDate, CURRENT_LABEL } from '../../lib/trajetoria';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('trajetoria');
-  return entries.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+  const pairs = await getTrajetoriaPairs();
+  return pairs
+    .filter((pair) => !pair.en.data.projectSlug)
+    .map((pair) => ({ params: { slug: pair.slug }, props: { pair } }));
 }
 
-const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { pair } = Astro.props;
+const enData = pair.en.data;
+const ptData = pair.pt?.data ?? enData;
+const type = TYPE_LABEL[enData.type] ?? { en: enData.type, pt: enData.type };
+
+const { Content: ContentEn } = await pair.en.render();
+const ContentPt = pair.pt ? (await pair.pt.render()).Content : ContentEn;
+
+const startEn = formatDate(enData.dateStart, 'en', enData.datePrecision);
+const endEn = enData.dateEnd ? formatDate(enData.dateEnd, 'en', enData.datePrecision) : CURRENT_LABEL.en;
+const startPt = formatDate(ptData.dateStart, 'pt', ptData.datePrecision);
+const endPt = ptData.dateEnd ? formatDate(ptData.dateEnd, 'pt', ptData.datePrecision) : CURRENT_LABEL.pt;
 ---
 
-<BaseLayout title={`${entry.data.title} — Larissa Böhm`}>
-  <a href={`${import.meta.env.BASE_URL}trajetoria`} class="font-mono text-xs text-muted hover:text-accent">&larr; trajetória</a>
+<BaseLayout title={`${enData.title} — Larissa Böhm`}>
+  <a href={`${import.meta.env.BASE_URL}trajetoria`} class="font-mono text-xs text-muted hover:text-accent" data-i18n="en">&larr; journey</a>
+  <a href={`${import.meta.env.BASE_URL}trajetoria`} class="font-mono text-xs text-muted hover:text-accent" data-i18n="pt">&larr; trajetória</a>
 
-  <h1 class="font-display text-2xl md:text-3xl text-ink mt-4">
-    {entry.data.title} <span class="text-accent">· {entry.data.org}</span>
+  <h1 class="font-display text-2xl md:text-3xl text-ink mt-4" data-i18n="en">
+    {enData.title} <span class="text-accent">· {enData.org}</span>
   </h1>
-  <p class="font-mono text-xs text-muted mt-2">
-    {entry.data.role} · {formatDate(entry.data.dateStart)} – {entry.data.dateEnd ? formatDate(entry.data.dateEnd) : 'Atual'}
+  <h1 class="font-display text-2xl md:text-3xl text-ink mt-4" data-i18n="pt">
+    {ptData.title} <span class="text-accent">· {ptData.org}</span>
+  </h1>
+  <p class="font-mono text-xs text-muted mt-2" data-i18n="en">
+    {enData.role} · {endEn === startEn ? startEn : `${startEn} – ${endEn}`}
   </p>
-  <span class="inline-block font-mono text-[10px] uppercase tracking-wide text-accent border border-line px-1.5 py-0.5 mt-3">
-    {TYPE_LABEL[entry.data.type]}
+  <p class="font-mono text-xs text-muted mt-2" data-i18n="pt">
+    {ptData.role} · {endPt === startPt ? startPt : `${startPt} – ${endPt}`}
+  </p>
+  <span class="inline-block font-mono text-[10px] uppercase tracking-wide text-accent border border-line px-1.5 py-0.5 mt-3" data-i18n="en">
+    {type.en}
+  </span>
+  <span class="inline-block font-mono text-[10px] uppercase tracking-wide text-accent border border-line px-1.5 py-0.5 mt-3" data-i18n="pt">
+    {type.pt}
   </span>
 
-  <article class="prose prose-invert prose-headings:font-display prose-p:text-ink/90 mt-10 max-w-none">
-    <Content />
+  <article class="prose prose-invert prose-headings:font-display prose-p:text-ink/90 mt-10 max-w-none" data-i18n="en">
+    <ContentEn />
+  </article>
+  <article class="prose prose-invert prose-headings:font-display prose-p:text-ink/90 mt-10 max-w-none" data-i18n="pt">
+    <ContentPt />
   </article>
 
-  {entry.data.link && (
-    <a href={entry.data.link} target="_blank" rel="noopener noreferrer" class="inline-block mt-10 font-mono text-sm text-accent hover:underline">
-      ver reel &rarr;
+  {enData.link && (
+    <a href={enData.link} target="_blank" rel="noopener noreferrer" class="inline-block mt-10 font-mono text-sm text-accent hover:underline" data-i18n="en">
+      read more &rarr;
+    </a>
+  )}
+  {ptData.link && (
+    <a href={ptData.link} target="_blank" rel="noopener noreferrer" class="inline-block mt-10 font-mono text-sm text-accent hover:underline" data-i18n="pt">
+      saiba mais &rarr;
     </a>
   )}
 </BaseLayout>

@@ -1,14 +1,22 @@
 ---
 title: "Cyber nas Escolas"
 org: "CtrlAlt+Delas × Instituto Gabriel Gastal"
-type: extensao
-role: "Desenvolvedora de conteúdo"
+type: voluntariado
+role: "Cybersecurity Teacher"
 dateStart: 2026-07-01
-summary: "Projeto de educação em cibersegurança para escolas, desenvolvido pelo CtrlAlt+Delas em parceria com o Instituto Gabriel Gastal."
+summary: "Cybersecurity education project for schools, developed by CtrlAlt+Delas in partnership with Instituto Gabriel Gastal."
 link: "https://www.instagram.com/reel/DctbO_JFOLK/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA=="
 ---
 
-Desenvolveu material de apresentação escolar, incluindo roteiro de vídeo de
-um minuto com estatísticas brasileiras verificadas (TIC Kids Online Brasil,
-SaferNet, estudo de cyberbullying em Pernambuco). Apresentou o projeto ao
-Instituto Gabriel Gastal como parceiro piloto.
+We are creating, at CtrlAlt+Delas, in partnership with Instituto Gabriel
+Gastal, the Cyber nas Escolas project, a digital security awareness
+initiative aimed at students.
+
+We recorded a roughly one-minute video that presents, in an accessible
+way, real data on the risks of the digital environment — such as
+cyberbullying and exposure to harmful content — based on verified
+statistics from TIC Kids Online Brasil, SaferNet, and a study on
+cyberbullying carried out in Pernambuco.
+
+The material will support the presentations we are bringing to schools,
+with Instituto Gabriel Gastal as the project's pilot partner.
