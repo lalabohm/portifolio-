@@ -6,6 +6,7 @@ role: "Membro"
 dateStart: 2025-01-01
 datePrecision: year
 summary: "Membro do Ramo Estudantil IEEE do IDP, atuando também nos grupos IES e WIE dentro do ramo."
+link: "https://www.linkedin.com/company/ieee-student-branch-idp/posts/?feedView=all"
 ---
 
 _Conteúdo em construção._ Detalhar aqui as atividades e eventos organizados

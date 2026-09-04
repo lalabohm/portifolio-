@@ -5,8 +5,8 @@ type: voluntariado
 role: "Volunteer"
 dateStart: 2020-02-01
 dateEnd: 2020-12-01
-summary: "Volunteering project carried out during high school, with actions aimed at the school community."
+summary: "Anjos do Sigma is a volunteer social project formed by high school students at Colégio Sigma in the Federal District, Brazil."
 ---
 
-Volunteering project carried out during high school, with actions aimed
-at the school community, between February and December 2020.
+Anjos do Sigma is a volunteer social project formed by high school
+students at Colégio Sigma in the Federal District, Brazil.
