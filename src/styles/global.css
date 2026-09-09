@@ -32,6 +32,24 @@ body {
   margin-bottom: 0.5em;
 }
 
+.prose p {
+  margin-bottom: 1em;
+}
+
+.prose ul {
+  list-style: disc;
+  padding-left: 1.5em;
+  margin: 0.75em 0;
+}
+
+.prose li {
+  margin-bottom: 0.4em;
+}
+
+.prose li::marker {
+  color: #C9A15A;
+}
+
 /* i18n: EN/PT toggle. Default (no data-lang yet, i.e. before the head
    script runs) shows English so there's a sane server-rendered fallback. */
 html:not([data-lang='pt']) [data-i18n='pt'] {

@@ -29,3 +29,28 @@ governance in the public sector.
 Development of a **data science pipeline for thematic clustering of research projects funded by CNPq**, based on semantic embeddings generated with the BGE-M3 model. The project involves dimensionality reduction (PCA, UMAP) and unsupervised clustering (K-Means, HDBSCAN) to identify thematic groupings among thousands of research projects, followed by cluster interpretation and interactive visualization of the results.
 
 **All work is conducted in a restricted environment (local JupyterLab, without unrestricted internet access), requiring solutions adapted to infrastructure constraints, demonstrating alignment with security and data governance best practices in the public sector.**
+
+## Technical skills acquired
+
+### Machine Learning / NLP
+
+- Critical selection of embedding models, weighing trade-offs between dimension, context limit, parameter size, and multilingual support
+- Applying model-specific requirements (e.g., the mandatory prefix for the E5 family) that affect quality in non-obvious ways
+- Diagnosing anisotropy in embeddings through statistical evidence (similarity distribution, standard deviation)
+
+### Methodological rigor
+
+- Grounding observed problems in academic literature before applying corrections
+- Empirically validating hypotheses with concrete before/after metrics
+- Identifying that a correction that is statistically positive on average can distort individual results, confirmed through a controlled experiment
+
+### Data pipeline engineering
+
+- Designing reproducible pipelines, with per-model output versioning and independent cell execution across sessions
+- Systematic debugging of errors (file paths, field names, data misalignment)
+- Ensuring consistency of transformations between data generation and later use
+
+### Technical communication
+
+- Technical documentation of decisions and experiment results in a clear, replicable format
+- Translating complex technical findings into accessible explanations for institutional reports
