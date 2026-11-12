@@ -7,9 +7,12 @@ metrics: ["F1 semântico: 0.833", "F1 da baseline regex: 0.545", "Corpus: 69 exe
 repoUrl: "https://github.com/lalabohm/semantic-llm-guard"
 date: 2026-06-01
 featured: true
+subtitle: "Detecção semântica de prompt injection com embeddings BGE-M3: uma comparação com filtragem por regex"
+abstract: "Filtros baseados em expressões regulares são uma primeira linha de defesa comum contra ataques de prompt injection e jailbreak, mas não detectam paráfrases que evitam frases-gatilho conhecidas. Este trabalho propõe um detector semântico que representa cada entrada com embeddings BGE-M3 e a compara, por similaridade de cosseno, com um corpus rotulado de 69 exemplos de ataques e de uso legítimo, protegendo um LLM local (Qwen3-8B). No conjunto de teste, o detector semântico obteve F1 de 0,833, contra 0,545 da baseline de regex, com taxa de falsos positivos de 0% contra 25%. Entre 8 ataques parafraseados, o detector semântico identificou 4 e a baseline, nenhum. Os resultados sustentam uma arquitetura de defesa em profundidade, com regex como filtro inicial e uma camada semântica complementar."
+keywords: ["segurança de LLMs", "prompt injection", "embeddings semânticos", "BGE-M3", "defesa em profundidade"]
 ---
 
-## Objetivo do projeto
+## 1 Introdução
 
 **semantic-llm-guard** é um firewall semântico para detectar ataques de
 *prompt injection* e *jailbreak*, com o objetivo de proteger um LLM local
@@ -23,25 +26,6 @@ comparada com uma abordagem tradicional de **filtragem baseada em regex**,
 permitindo avaliar os ganhos e limitações de cada método — incluindo a
 capacidade do BGE-M3 de generalizar entre idiomas (por exemplo, detectar
 em português um ataque originalmente descrito em inglês).
-
-## Como começar
-
-Clone este repositório para começar:
-
-```bash
-git clone https://github.com/lalabohm/semantic-llm-guard.git
-cd semantic-llm-guard
-```
-
-Veja [Início rápido com Docker](#início-rápido-com-docker) abaixo para as
-instruções completas de instalação, incluindo Docker.
-
-Para uma introdução aos conceitos centrais por trás deste projeto (prompt
-injection, detecção semântica vs. por palavras-chave, métricas de
-avaliação), veja
-[Conceitos de fundo](https://github.com/lalabohm/semantic-llm-guard/blob/main/docs/BACKGROUND_CONCEPTS.md).
-
-## Por que detecção semântica? (e por que o regex ainda importa)
 
 Regex e correspondência por palavras-chave continuam sendo uma primeira
 linha de defesa comum contra prompt injection em sistemas de produção: são
@@ -78,7 +62,47 @@ LLM Applications, que recomendam combinar múltiplas camadas de defesa
 independentes em vez de depender de um único mecanismo de detecção (veja
 [Referências](#referências)).
 
-### Resultados em resumo
+## 2 Método
+
+O detector semântico fica na frente do LLM local como uma etapa de
+triagem: toda entrada do usuário é classificada antes de poder chegar ao
+Qwen3-8B. Requisições sinalizadas como ataque são bloqueadas imediatamente
+e nunca são enviadas ao modelo.
+
+```
+entrada do usuário
+    |
+    v
+embedding BGE-M3
+    |
+    v
+checagem de similaridade (vs. corpus rotulado)
+    |
+    +-- flagged=True  --> [BLOQUEADO]  (registrado, sem envio ao modelo)
+    |
+    +-- flagged=False --> encaminhado ao Qwen3-8B via Ollama --> resposta
+```
+
+![Diagrama de arquitetura do pipeline: a entrada do usuário passa pelo embedding BGE-M3 e por uma checagem de similaridade, então segue para um caminho bloqueado ou é encaminhada ao Qwen3-8B, ambos terminando no log do pipeline](https://raw.githubusercontent.com/lalabohm/semantic-llm-guard/main/results/pipeline_architecture.png)
+
+**Figura 1** — Fluxo do detector. *Toda requisição é registrada independentemente do resultado — requisições
+bloqueadas são registradas sem nunca chegar ao Qwen3-8B.*
+
+Cada requisição processada pelo pipeline (`src/pipeline.py`) é registrada
+como uma linha JSON em `results/pipeline_log.jsonl`, incluindo a decisão, a
+categoria correspondente e o escore de similaridade, e a latência de cada
+etapa (triagem semântica vs. resposta do modelo).
+
+## 3 Resultados
+
+**Tabela 1** — Desempenho no conjunto de teste
+
+| Método | F1 | Taxa de falsos positivos | Paráfrases detectadas |
+|---|---:|---:|---:|
+| Baseline regex | 0,545 | 25% | 0 de 8 |
+| **Semântico (BGE-M3)** | **0,833** | **0%** | **4 de 8** |
+
+Fonte: `results/evaluation_report.json`.
 
 Os gráficos e o heatmap são gerados por `src/generate_charts.py` e
 `src/similarity_matrix.py` a partir de `results/evaluation_report.json`.
@@ -107,6 +131,29 @@ abaixo dele, o que explica um recall de 0,71 e não mais alto.*
 contra os exemplos do corpus (colunas) da própria categoria de ataque, e
 visivelmente mais escuros contra as colunas benignas à direita.*
 
+## 4 Limitações
+
+- Corpus pequeno (69 exemplos), o que limita a generalização dos resultados.
+- Recall de 0,71: metade dos ataques parafraseados ainda fica abaixo do limiar.
+- Limiar único (0,7), sem calibração por categoria de ataque.
+
+## 5 Reprodutibilidade
+
+Clone este repositório para começar:
+
+```bash
+git clone https://github.com/lalabohm/semantic-llm-guard.git
+cd semantic-llm-guard
+```
+
+Veja [Início rápido com Docker](#início-rápido-com-docker) abaixo para as
+instruções completas de instalação, incluindo Docker.
+
+Para uma introdução aos conceitos centrais por trás deste projeto (prompt
+injection, detecção semântica vs. por palavras-chave, métricas de
+avaliação), veja
+[Conceitos de fundo](https://github.com/lalabohm/semantic-llm-guard/blob/main/docs/BACKGROUND_CONCEPTS.md).
+
 ### Estrutura do projeto
 
 - `src/` — código principal (geração de embeddings, detecção, pipeline de avaliação)
@@ -116,7 +163,7 @@ visivelmente mais escuros contra as colunas benignas à direita.*
 - `requirements.txt` — dependências Python do projeto
 - `config.yaml` — configuração do pipeline (modelo LLM, tamanho de contexto, modo de raciocínio)
 
-## Requisitos de hardware
+### Requisitos de hardware
 
 O detector semântico (BGE-M3) roda em CPU por padrão e funciona em
 qualquer máquina. O LLM local (Qwen3-8B via Ollama) é a parte pesada em
@@ -138,7 +185,7 @@ llm:
 
 Depois baixe-o uma vez com o Ollama: `ollama pull qwen3:4b`.
 
-## Início rápido com Docker
+### Início rápido com Docker
 
 Uma alternativa à configuração manual acima (venv + Python local + Ollama
 instalado localmente) — útil se você preferir não configurar o ambiente do
@@ -171,37 +218,6 @@ serviço `ollama` é opcional e está comentada em `docker-compose.yml` — ela
 requer o [NVIDIA Container
 Toolkit](https://github.com/NVIDIA/nvidia-container-toolkit) instalado no
 host.
-
-## Integração no pipeline
-
-O detector semântico fica na frente do LLM local como uma etapa de
-triagem: toda entrada do usuário é classificada antes de poder chegar ao
-Qwen3-8B. Requisições sinalizadas como ataque são bloqueadas imediatamente
-e nunca são enviadas ao modelo.
-
-```
-entrada do usuário
-    |
-    v
-embedding BGE-M3
-    |
-    v
-checagem de similaridade (vs. corpus rotulado)
-    |
-    +-- flagged=True  --> [BLOQUEADO]  (registrado, sem envio ao modelo)
-    |
-    +-- flagged=False --> encaminhado ao Qwen3-8B via Ollama --> resposta
-```
-
-![Diagrama de arquitetura do pipeline: a entrada do usuário passa pelo embedding BGE-M3 e por uma checagem de similaridade, então segue para um caminho bloqueado ou é encaminhada ao Qwen3-8B, ambos terminando no log do pipeline](https://raw.githubusercontent.com/lalabohm/semantic-llm-guard/main/results/pipeline_architecture.png)
-
-*Toda requisição é registrada independentemente do resultado — requisições
-bloqueadas são registradas sem nunca chegar ao Qwen3-8B.*
-
-Cada requisição processada pelo pipeline (`src/pipeline.py`) é registrada
-como uma linha JSON em `results/pipeline_log.jsonl`, incluindo a decisão, a
-categoria correspondente e o escore de similaridade, e a latência de cada
-etapa (triagem semântica vs. resposta do modelo).
 
 ### Uma nota sobre contenção de GPU (6GB de VRAM)
 
@@ -239,12 +255,6 @@ injection clássica, um ataque parafraseado/sutil e uma requisição benigna
 legítima) e imprime a decisão, categoria, escore de similaridade e
 latência por etapa para cada um — a resposta do Qwen3-8B só é exibida para
 a requisição que é permitida.
-
-### Status
-
-Pipeline principal implementado: triagem semântica na frente do Qwen3-8B,
-com logging estruturado e avaliação comparativa contra uma baseline de
-regex.
 
 ## Referências
 

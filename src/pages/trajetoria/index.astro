@@ -1,73 +1,63 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getTrajetoriaPairs, TYPE_LABEL, formatDate, CURRENT_LABEL } from '../../lib/trajetoria';
+import { getTrajetoriaPairs, TYPE_GROUPS, formatRange } from '../../lib/trajetoria';
 
+const base = import.meta.env.BASE_URL;
 const pairs = await getTrajetoriaPairs();
+const groups = TYPE_GROUPS.map((g) => ({
+  ...g,
+  items: pairs.filter((p) => p.en.data.type === g.type),
+})).filter((g) => g.items.length > 0);
 ---
 
-<BaseLayout title="Trajetória — Larissa Böhm">
-  <h1 class="font-display text-2xl text-ink" data-i18n="en">Journey</h1>
-  <h1 class="font-display text-2xl text-ink" data-i18n="pt">Trajetória</h1>
-  <p class="font-mono text-xs text-muted uppercase tracking-wide mt-1 mb-8" data-i18n="en">Computer Science undergraduate</p>
-  <p class="font-mono text-xs text-muted uppercase tracking-wide mt-1 mb-8" data-i18n="pt">Graduando em Ciência da Computação</p>
+<BaseLayout title="Trajetória — Larissa Böhm Araújo">
+  <h1 class="font-display text-4xl font-semibold tracking-tight text-ink">
+    <span data-i18n="en">Journey</span><span data-i18n="pt">Trajetória</span>
+  </h1>
+  <p class="mt-2.5 text-lg leading-relaxed text-muted" data-i18n="en">
+    Organized as in the Lattes CV: research, professional experience, extension, teaching and complementary
+    education. <a href="http://lattes.cnpq.br/5682267720222263" target="_blank" rel="noopener noreferrer" class="link">See Lattes</a>
+  </p>
+  <p class="mt-2.5 text-lg leading-relaxed text-muted" data-i18n="pt">
+    Organizada como no Currículo Lattes: pesquisa, atuação profissional, extensão, ensino e formação complementar.
+    <a href="http://lattes.cnpq.br/5682267720222263" target="_blank" rel="noopener noreferrer" class="link">Ver Lattes</a>
+  </p>
 
-  <div>
-    {pairs.map((pair) => {
-      const enData = pair.en.data;
-      const ptData = pair.pt?.data ?? enData;
-      const type = TYPE_LABEL[enData.type] ?? { en: enData.type, pt: enData.type };
-      const href = `${import.meta.env.BASE_URL}${enData.projectSlug ? `projects/${enData.projectSlug}` : `trajetoria/${pair.slug}`}`;
-
-      return (
-        <div class="flex gap-6 border-t border-line py-6">
-          <div class="w-28 shrink-0 font-mono text-xs text-muted">
-            <div data-i18n="en">{formatDate(enData.dateStart, 'en', enData.datePrecision)}</div>
-            <div data-i18n="pt">{formatDate(ptData.dateStart, 'pt', ptData.datePrecision)}</div>
-            {(() => {
-              const startEn = formatDate(enData.dateStart, 'en', enData.datePrecision);
-              const endEn = enData.dateEnd ? formatDate(enData.dateEnd, 'en', enData.datePrecision) : CURRENT_LABEL.en;
-              const startPt = formatDate(ptData.dateStart, 'pt', ptData.datePrecision);
-              const endPt = ptData.dateEnd ? formatDate(ptData.dateEnd, 'pt', ptData.datePrecision) : CURRENT_LABEL.pt;
-              return (
-                <>
-                  {endEn !== startEn && <div data-i18n="en">{endEn}</div>}
-                  {endPt !== startPt && <div data-i18n="pt">{endPt}</div>}
-                </>
-              );
-            })()}
-            <span class="inline-block font-mono text-[10px] uppercase tracking-wide text-accent border border-line px-1.5 py-0.5 mt-2" data-i18n="en">
-              {type.en}
+  {groups.map((g) => (
+    <section class="mt-11">
+      <h2 class="section-title !mb-1.5 flex items-center gap-2.5">
+        <span aria-hidden="true" class={`inline-block w-2.5 h-2.5 ${g.color}`}></span>
+        <span data-i18n="en">{g.en}</span><span data-i18n="pt">{g.pt}</span>
+      </h2>
+      {g.items.map((pair) => {
+        const en = pair.en.data;
+        const pt = pair.pt?.data ?? en;
+        const href = `${base}${en.projectSlug ? `projects/${en.projectSlug}` : `trajetoria/${pair.slug}`}`;
+        return (
+          <div class="grid grid-cols-1 sm:grid-cols-[160px_minmax(0,1fr)] gap-x-5 gap-y-1 py-4 border-b border-line2">
+            <span class="font-mono text-[13px] text-primary sm:pt-1">
+              <span data-i18n="en">{formatRange(en.dateStart, en.dateEnd, 'en', en.datePrecision)}</span>
+              <span data-i18n="pt">{formatRange(pt.dateStart, pt.dateEnd, 'pt', pt.datePrecision)}</span>
             </span>
-            <span class="inline-block font-mono text-[10px] uppercase tracking-wide text-accent border border-line px-1.5 py-0.5 mt-2" data-i18n="pt">
-              {type.pt}
-            </span>
-          </div>
-          <div class="flex-1">
-            <a href={href} class="no-underline">
-              <h3 class="font-display text-lg text-ink hover:text-accent transition-colors" data-i18n="en">
-                {enData.title} <span class="text-accent">· {enData.org}</span>
-              </h3>
-              <h3 class="font-display text-lg text-ink hover:text-accent transition-colors" data-i18n="pt">
-                {ptData.title} <span class="text-accent">· {ptData.org}</span>
-              </h3>
-            </a>
-            <p class="font-mono text-xs text-muted mt-1" data-i18n="en">{enData.role}</p>
-            <p class="font-mono text-xs text-muted mt-1" data-i18n="pt">{ptData.role}</p>
-            <p class="text-muted mt-2 leading-relaxed" data-i18n="en">{enData.summary}</p>
-            <p class="text-muted mt-2 leading-relaxed" data-i18n="pt">{ptData.summary}</p>
-            {enData.link && (
-              <a href={enData.link} target="_blank" rel="noopener noreferrer" class="inline-block mt-2 font-mono text-sm text-accent hover:underline" data-i18n="en">
-                read more &rarr;
+            <div>
+              <a href={href} class="no-underline">
+                <p class="text-lg font-semibold text-ink hover:text-accent transition-colors" data-i18n="en">{en.title}</p>
+                <p class="text-lg font-semibold text-ink hover:text-accent transition-colors" data-i18n="pt">{pt.title}</p>
               </a>
-            )}
-            {ptData.link && (
-              <a href={ptData.link} target="_blank" rel="noopener noreferrer" class="inline-block mt-2 font-mono text-sm text-accent hover:underline" data-i18n="pt">
-                saiba mais &rarr;
-              </a>
-            )}
+              <p class="mt-0.5 text-base italic text-muted" data-i18n="en">{en.role} · {en.org}</p>
+              <p class="mt-0.5 text-base italic text-muted" data-i18n="pt">{pt.role} · {pt.org}</p>
+              <p class="mt-1.5 text-base leading-relaxed text-body" data-i18n="en">{en.summary}</p>
+              <p class="mt-1.5 text-base leading-relaxed text-body" data-i18n="pt">{pt.summary}</p>
+              {en.link && (
+                <a href={en.link} target="_blank" rel="noopener noreferrer" class="link inline-block mt-1.5 font-mono text-[13px]" data-i18n="en">read more &rarr;</a>
+              )}
+              {pt.link && (
+                <a href={pt.link} target="_blank" rel="noopener noreferrer" class="link inline-block mt-1.5 font-mono text-[13px]" data-i18n="pt">saiba mais &rarr;</a>
+              )}
+            </div>
           </div>
-        </div>
-      );
-    })}
-  </div>
+        );
+      })}
+    </section>
+  ))}
 </BaseLayout>

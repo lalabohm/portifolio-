@@ -1,7 +1,7 @@
 ---
 title: "Public Speaking and Communication Intelligence"
 org: "IDP"
-type: extensao
+type: formacao
 role: "Student"
 dateStart: 2025-07-01
 dateEnd: 2025-12-01

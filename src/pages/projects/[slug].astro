@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getProjectPairs, STATUS_LABEL } from '../../lib/projects';
+import { getProjectPairs, STATUS_LABEL, STATUS_STYLE } from '../../lib/projects';
 
 export async function getStaticPaths() {
   const pairs = await getProjectPairs();
@@ -10,52 +10,78 @@ export async function getStaticPaths() {
 const { pair } = Astro.props;
 const enData = pair.en.data;
 const ptData = pair.pt?.data ?? enData;
+const base = import.meta.env.BASE_URL;
 
 const { Content: ContentEn } = await pair.en.render();
 const ContentPt = pair.pt ? (await pair.pt.render()).Content : ContentEn;
 
 const status = STATUS_LABEL[enData.status] ?? { en: enData.status, pt: enData.status };
+const statusClass = STATUS_STYLE[enData.status] ?? 'bg-surface text-muted';
+const year = enData.date.getUTCFullYear();
+
+const langs = [
+  { lang: 'en', data: enData, Content: ContentEn, status: status.en, crumb: 'Home', projects: 'Projects',
+    abstract: 'Abstract', keywords: 'Keywords', code: 'Code', award: 'award' },
+  { lang: 'pt', data: ptData, Content: ContentPt, status: status.pt, crumb: 'Início', projects: 'Projetos',
+    abstract: 'Resumo', keywords: 'Palavras-chave', code: 'Código', award: 'premiado' },
+] as const;
 ---
 
-<BaseLayout title={`${enData.title} — Larissa Böhm`}>
-  <a href={`${import.meta.env.BASE_URL}projects`} class="font-mono text-xs text-muted hover:text-accent" data-i18n="en">&larr; projects</a>
-  <a href={`${import.meta.env.BASE_URL}projects`} class="font-mono text-xs text-muted hover:text-accent" data-i18n="pt">&larr; projetos</a>
+<BaseLayout title={`${enData.title} — Larissa Böhm Araújo`} description={enData.summary}>
+  {langs.map((l) => (
+    <div data-i18n={l.lang}>
+      <p class="mb-7 font-mono text-[13px] text-muted">
+        <a href={base} class="link">{l.crumb}</a> / <a href={`${base}projects`} class="link">{l.projects}</a> / {l.data.title}
+      </p>
 
-  <h1 class="font-display text-2xl md:text-3xl text-ink mt-4" data-i18n="en">{enData.title}</h1>
-  <h1 class="font-display text-2xl md:text-3xl text-ink mt-4" data-i18n="pt">{ptData.title}</h1>
-  <p class="font-mono text-xs text-muted mt-2" data-i18n="en">{status.en}</p>
-  <p class="font-mono text-xs text-muted mt-2" data-i18n="pt">{status.pt}</p>
+      <p class="font-mono text-xs tracking-wide text-primary flex flex-wrap items-center gap-2">
+        <span>{year}</span>
+        <span aria-hidden="true">·</span>
+        <span class={`pill ${statusClass}`}>{l.status}</span>
+        {l.data.award && <span class="pill bg-accent-soft text-accent">{l.award}</span>}
+      </p>
+      <h1 class="mt-2.5 font-display text-3xl md:text-[34px] font-semibold leading-tight tracking-tight text-ink">{l.data.title}</h1>
+      {l.data.subtitle && (
+        <p class="mt-2 text-xl md:text-[22px] leading-snug italic text-body">{l.data.subtitle}</p>
+      )}
+      {l.data.abstract && (
+        <>
+          <p class="mt-3.5 text-lg text-ink">
+            Larissa Böhm Araújo <span class="font-mono text-[13px] text-muted">(ARAÚJO, L. B.)</span>
+          </p>
+          <p class="text-base italic text-muted">Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP), Brasília</p>
+        </>
+      )}
+      {l.data.award && <p class="mt-3 text-base text-ink"><strong class="font-semibold">{l.data.award}</strong></p>}
 
-  <div class="flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs text-accent mt-4">
-    {enData.stack.map((s: string) => <span>{s}</span>)}
-  </div>
+      <p class="mt-4 font-mono text-xs text-muted">{l.data.stack.join(' · ')}</p>
+      {l.data.repoUrl && (
+        <p class="mt-2 font-mono text-[13px]">
+          <a href={l.data.repoUrl} target="_blank" rel="noopener noreferrer" class="link">{l.code}</a>
+        </p>
+      )}
 
-  {enData.metrics && enData.metrics.length > 0 && (
-    <ul class="font-mono text-xs text-muted flex flex-col gap-1 mt-4 border-l-2 border-line pl-4" data-i18n="en">
-      {enData.metrics.map((m: string) => <li>{m}</li>)}
-    </ul>
-  )}
-  {ptData.metrics && ptData.metrics.length > 0 && (
-    <ul class="font-mono text-xs text-muted flex flex-col gap-1 mt-4 border-l-2 border-line pl-4" data-i18n="pt">
-      {ptData.metrics.map((m: string) => <li>{m}</li>)}
-    </ul>
-  )}
+      {l.data.metrics && l.data.metrics.length > 0 && (
+        <ul class="mt-4 font-mono text-xs text-muted flex flex-col gap-1 border-l-2 border-primary pl-4">
+          {l.data.metrics.map((m: string) => <li>{m}</li>)}
+        </ul>
+      )}
 
-  <article class="prose prose-invert prose-headings:font-display prose-p:text-ink/90 mt-10 max-w-none" data-i18n="en">
-    <ContentEn />
-  </article>
-  <article class="prose prose-invert prose-headings:font-display prose-p:text-ink/90 mt-10 max-w-none" data-i18n="pt">
-    <ContentPt />
-  </article>
+      {l.data.abstract && (
+        <section class="mt-9 px-5 sm:px-7 py-6 bg-primary-tint border-t-[3px] border-primary border-b border-b-line">
+          <h2 class="text-[15px] font-semibold tracking-[0.12em] uppercase text-primary mb-2.5">{l.abstract}</h2>
+          <p class="text-[17px] leading-[1.7] text-ink text-justify hyphens-auto">{l.data.abstract}</p>
+          {l.data.keywords && l.data.keywords.length > 0 && (
+            <p class="mt-3.5 text-base leading-relaxed text-ink">
+              <strong class="font-semibold">{l.keywords}:</strong> {l.data.keywords.join('; ')}.
+            </p>
+          )}
+        </section>
+      )}
 
-  {enData.repoUrl && (
-    <a href={enData.repoUrl} class="inline-block mt-10 font-mono text-sm text-accent hover:underline" data-i18n="en">
-      view repository
-    </a>
-  )}
-  {ptData.repoUrl && (
-    <a href={ptData.repoUrl} class="inline-block mt-10 font-mono text-sm text-accent hover:underline" data-i18n="pt">
-      ver repositório
-    </a>
-  )}
+      <article class="prose mt-10 max-w-none">
+        <l.Content />
+      </article>
+    </div>
+  ))}
 </BaseLayout>

@@ -12,6 +12,13 @@ export const STATUS_LABEL: Record<string, { en: string; pt: string }> = {
   paused: { en: 'paused', pt: 'pausado' },
 };
 
+// Pill colors per status (Tailwind classes).
+export const STATUS_STYLE: Record<string, string> = {
+  'in progress': 'bg-amber-tint text-amber',
+  completed: 'bg-teal-tint text-teal',
+  paused: 'bg-surface text-muted',
+};
+
 export async function getProjectPairs(): Promise<ProjectPair[]> {
   const all = await getCollection('projects');
   const en = all.filter((entry) => !entry.slug.startsWith('pt/'));

@@ -1,7 +1,7 @@
 ---
 title: "Sprint IDP × BYD"
 org: "IDP × BYD"
-type: profissional
+type: extensao
 role: "Developer"
 dateStart: 2025-04-01
 dateEnd: 2025-06-30

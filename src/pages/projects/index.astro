@@ -6,10 +6,17 @@ import { getProjectPairs } from '../../lib/projects';
 const pairs = await getProjectPairs();
 ---
 
-<BaseLayout title="Projects — Larissa Böhm">
-  <h1 class="font-display text-2xl text-ink mb-2" data-i18n="en">Projects</h1>
-  <h1 class="font-display text-2xl text-ink mb-2" data-i18n="pt">Projetos</h1>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<BaseLayout title="Projects — Larissa Böhm Araújo">
+  <h1 class="font-display text-4xl font-semibold tracking-tight text-ink">
+    <span data-i18n="en">Projects</span><span data-i18n="pt">Projetos</span>
+  </h1>
+  <p class="mt-2 text-lg text-muted leading-relaxed" data-i18n="en">
+    Research, coursework and competition projects, most recent first.
+  </p>
+  <p class="mt-2 text-lg text-muted leading-relaxed" data-i18n="pt">
+    Projetos de pesquisa, de curso e de competições, do mais recente para o mais antigo.
+  </p>
+  <div class="mt-8 border-t-2 border-accent-soft">
     {pairs.map((pair) => <BilingualProjectEntry pair={pair} />)}
   </div>
 </BaseLayout>
