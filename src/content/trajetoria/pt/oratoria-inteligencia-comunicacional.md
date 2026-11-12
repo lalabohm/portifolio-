@@ -1,7 +1,7 @@
 ---
 title: "Oratória e Inteligência Comunicacional"
 org: "IDP"
-type: extensao
+type: formacao
 role: "Aluna"
 dateStart: 2025-07-01
 dateEnd: 2025-12-01

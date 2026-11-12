@@ -1,48 +1,92 @@
 ---
+const base = import.meta.env.BASE_URL;
 const links = [
-  { href: `${import.meta.env.BASE_URL}projects`, en: 'projects', pt: 'projetos' },
-  { href: `${import.meta.env.BASE_URL}trajetoria`, en: 'journey', pt: 'trajetória' },
-  { href: `${import.meta.env.BASE_URL}ctf`, en: 'events', pt: 'eventos' },
+  { href: `${base}#pesquisa`, en: 'Research', pt: 'Pesquisa' },
+  { href: `${base}projects`, en: 'Projects', pt: 'Projetos' },
+  { href: `${base}trajetoria`, en: 'Journey', pt: 'Trajetória' },
+  { href: `${base}ctf`, en: 'Events', pt: 'Eventos' },
 ];
+const cvHref = `${base}cv/Larissa_Bohm_Araujo_CV.pdf`;
+const btn =
+  'font-mono text-xs text-muted border border-line rounded px-2 py-1 min-h-[30px] hover:text-accent hover:border-accent transition-colors';
 ---
 
 <header class="w-full border-b border-line">
-  <div class="max-w-3xl mx-auto px-6 py-6 flex items-baseline justify-between gap-4">
-    <a href={import.meta.env.BASE_URL} class="font-display text-lg text-ink no-underline">
-      Larissa Böhm<span class="text-accent">.</span>
+  <div class="max-w-3xl mx-auto px-6 py-5 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3">
+    <a href={base} class="font-display text-lg font-semibold text-ink no-underline">
+      Larissa Böhm Araújo
     </a>
-    <div class="flex items-baseline gap-6">
-      <nav class="flex gap-6 font-mono text-sm text-muted">
-        {links.map((l) => (
-          <a href={l.href} class="hover:text-accent transition-colors">
-            <span data-i18n="en">{l.en}</span><span data-i18n="pt">{l.pt}</span>
-          </a>
-        ))}
-      </nav>
-      <button
-        id="lang-toggle"
-        type="button"
-        aria-label="Toggle language / Alternar idioma"
-        class="font-mono text-xs text-muted border border-line rounded px-2 py-1 hover:text-accent hover:border-accent transition-colors"
-      >
-        <span data-i18n="en">PT</span><span data-i18n="pt">EN</span>
-      </button>
-    </div>
+    <nav class="flex flex-wrap items-baseline gap-x-5 gap-y-1 text-base">
+      {links.map((l) => (
+        <a href={l.href} class="text-ink hover:text-accent transition-colors">
+          <span data-i18n="en">{l.en}</span><span data-i18n="pt">{l.pt}</span>
+        </a>
+      ))}
+      <a href={cvHref} download="Larissa_Bohm_Araujo_CV.pdf" class="text-ink hover:text-accent transition-colors">
+        CV (PDF)
+      </a>
+      <span class="flex items-baseline gap-2">
+        <button id="theme-toggle" type="button" class={btn}>
+          <span class="theme-label-dark" data-i18n="en">dark</span><span class="theme-label-dark" data-i18n="pt">escuro</span>
+          <span class="theme-label-light" data-i18n="en">light</span><span class="theme-label-light" data-i18n="pt">claro</span>
+        </button>
+        <button id="lang-toggle" type="button" aria-label="Toggle language / Alternar idioma" class={btn}>
+          <span data-i18n="en">PT</span><span data-i18n="pt">EN</span>
+        </button>
+      </span>
+    </nav>
   </div>
 </header>
 
+<style is:global>
+  html:not([data-theme='dark']) .theme-label-light,
+  html[data-theme='dark'] .theme-label-dark {
+    display: none !important;
+  }
+</style>
+
 <script is:inline>
   (function () {
-    var btn = document.getElementById('lang-toggle');
-    if (!btn) return;
-    btn.addEventListener('click', function () {
-      var root = document.documentElement;
-      var next = root.getAttribute('data-lang') === 'pt' ? 'en' : 'pt';
-      root.setAttribute('data-lang', next);
-      root.lang = next;
-      try {
-        localStorage.setItem('portfolio-lang', next);
-      } catch (e) {}
-    });
+    var root = document.documentElement;
+
+    var langBtn = document.getElementById('lang-toggle');
+    if (langBtn) {
+      langBtn.addEventListener('click', function () {
+        var next = root.getAttribute('data-lang') === 'pt' ? 'en' : 'pt';
+        root.setAttribute('data-lang', next);
+        root.lang = next;
+        try {
+          localStorage.setItem('portfolio-lang', next);
+        } catch (e) {}
+        updateThemeLabel();
+      });
+    }
+
+    var themeBtn = document.getElementById('theme-toggle');
+    function updateThemeLabel() {
+      if (!themeBtn) return;
+      var dark = root.getAttribute('data-theme') === 'dark';
+      var pt = root.getAttribute('data-lang') === 'pt';
+      themeBtn.setAttribute(
+        'aria-label',
+        dark ? (pt ? 'Mudar para tema claro' : 'Switch to light theme')
+             : (pt ? 'Mudar para tema escuro' : 'Switch to dark theme')
+      );
+    }
+    if (themeBtn) {
+      updateThemeLabel();
+      themeBtn.addEventListener('click', function () {
+        var dark = root.getAttribute('data-theme') === 'dark';
+        if (dark) {
+          root.removeAttribute('data-theme');
+        } else {
+          root.setAttribute('data-theme', 'dark');
+        }
+        try {
+          localStorage.setItem('portfolio-theme', dark ? 'light' : 'dark');
+        } catch (e) {}
+        updateThemeLabel();
+      });
+    }
   })();
 </script>

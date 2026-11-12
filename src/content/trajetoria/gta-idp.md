@@ -4,7 +4,7 @@ org: "IDP"
 type: pesquisa
 role: "Researcher"
 dateStart: 2026-05-01
-summary: "Member of the Research Group on Cognition and Applied Technologies (GTA) at IDP, since May 2026."
+summary: "Member, since May 2026, of the Research Group on Cognition and Applied Technologies (GTA) at IDP, a group active since 2024."
 ---
 
 Member of the Research Group on Cognition and Applied Technologies (GTA)

@@ -3,7 +3,8 @@ title: "Pangeia — Adversarial Defense Framework"
 summary: "Framework de defesa adversarial para detectores de DDoS baseados em ML em redes 5G/SDN, usando Feature Squeezing + PCA Whitening, integrado ao Heimdall."
 stack: ["ML", "5G/SDN", "Feature Squeezing", "PCA Whitening", "Heimdall"]
 status: "completed"
-metrics: ["4º lugar — IEEE SA Cybersecurity Hackathon 2026"]
+metrics: []
+award: "2º lugar no CTF e 4º lugar na classificação geral — IEEE SA Cybersecurity Hackathon 2026"
 repoUrl: "https://github.com/massarrahelenna/hackaton-pangeia"
 date: 2026-03-01
 featured: true

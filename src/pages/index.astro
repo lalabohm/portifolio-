@@ -3,84 +3,198 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import BilingualProjectEntry from '../components/BilingualProjectEntry.astro';
 import { getProjectPairs } from '../lib/projects';
 
+const base = import.meta.env.BASE_URL;
 const pairs = (await getProjectPairs()).filter((p) => p.en.data.featured);
+const cvHref = `${base}cv/Larissa_Bohm_Araujo_CV.pdf`;
+
+const interests = [
+  {
+    color: 'border-t-primary', num: 'text-primary',
+    en: { t: 'LLM security', d: 'Detection of <em>prompt injection</em> and <em>jailbreak</em> attacks.' },
+    pt: { t: 'Segurança de LLMs', d: 'Detecção de <em>prompt injection</em> e <em>jailbreak</em>.' },
+  },
+  {
+    color: 'border-t-accent', num: 'text-accent',
+    en: { t: 'Agent security', d: 'Secure architectures for the Model Context Protocol (MCP).' },
+    pt: { t: 'Segurança de agentes', d: 'Arquiteturas seguras para o Model Context Protocol (MCP).' },
+  },
+  {
+    color: 'border-t-teal', num: 'text-teal',
+    en: { t: 'Adversarial ML', d: 'Robustness of detectors in 5G/SDN networks.' },
+    pt: { t: 'ML adversarial', d: 'Robustez de detectores em redes 5G/SDN.' },
+  },
+  {
+    color: 'border-t-amber', num: 'text-amber',
+    en: { t: 'NLP for Portuguese', d: 'Embedding fidelity and semantic analysis applied to research funding.' },
+    pt: { t: 'PLN em português', d: 'Fidelidade de embeddings e análise semântica aplicada ao fomento científico.' },
+  },
+];
+
+const current = [
+  {
+    date: { en: 'Feb 2026 – Current', pt: 'Fev 2026 – Atual' },
+    en: {
+      t: 'Data Science and AI Intern — COENG/CNPq',
+      d: 'NLP pipeline with semantic embeddings (BGE-M3) for thematic clustering of funded research projects.',
+      link: 'see project',
+    },
+    pt: {
+      t: 'Estágio em Ciência de Dados e IA — COENG/CNPq',
+      d: 'Pipeline de PLN com embeddings semânticos (BGE-M3) para agrupamento temático de projetos de pesquisa financiados.',
+      link: 'ver projeto',
+    },
+    href: `${base}projects/cnpq-semantic-analysis`,
+  },
+  {
+    date: { en: '2026 – Current', pt: '2026 – Atual' },
+    en: {
+      t: 'Member — Research Group on Cognition and Applied Technologies (GTA/IDP)',
+      d: 'Group active since 2024; research on human cognition with technologies applied to Psychology and Cognitive Neuroscience.',
+    },
+    pt: {
+      t: 'Membro — Grupo de Pesquisa em Cognição e Tecnologias Aplicadas (GTA/IDP)',
+      d: 'Grupo ativo desde 2024; pesquisa sobre cognição humana com tecnologias aplicadas à Psicologia e à Neurociência Cognitiva.',
+    },
+  },
+  {
+    date: { en: '2026 – 2027', pt: '2026 – 2027' },
+    en: {
+      t: 'Undergraduate thesis — SMGA',
+      d: 'Secure MCP Gateway Architecture: a security layer for LLM agent pipelines. Defense expected in June 2027.',
+      link: 'see project',
+    },
+    pt: {
+      t: 'Trabalho de Conclusão de Curso — SMGA',
+      d: 'Secure MCP Gateway Architecture: camada de segurança para pipelines de agentes LLM. Defesa prevista para junho de 2027.',
+      link: 'ver projeto',
+    },
+    href: `${base}projects/smga`,
+  },
+];
 ---
 
-<BaseLayout title="Larissa Böhm — Portfolio">
-  <section class="mb-16 flex items-start justify-between gap-8">
-    <div class="max-w-xl">
-      <h1 class="font-display text-3xl md:text-4xl text-ink leading-tight">
-        Larissa Böhm<span class="text-accent">.</span>
-      </h1>
-      <p class="text-base text-gray-500 mt-4 leading-relaxed" data-i18n="en">
-        I focus on LLM security, agent architectures, and adversarial machine learning.
-      </p>
-      <p class="text-base text-gray-500 mt-4 leading-relaxed" data-i18n="pt">
-        Foco em segurança de LLMs, arquiteturas de agentes e aprendizado de máquina adversarial.
-      </p>
-    </div>
+<BaseLayout title="Larissa Böhm Araújo — Portfolio">
+  <section class="mb-14 flex flex-wrap items-start gap-8">
     <img
-      src={`${import.meta.env.BASE_URL}fotoLarissa.jpeg`}
-      alt="Larissa Böhm"
-      class="block w-20 h-20 sm:w-32 sm:h-32 rounded-full border border-line object-cover shrink-0"
+      src={`${base}fotoLarissa.jpeg`}
+      alt="Larissa Böhm Araújo"
+      class="block w-28 h-28 sm:w-32 sm:h-32 object-cover rounded-sm border border-line shrink-0"
     />
-  </section>
-
-  <section class="mb-16">
-    <h2 class="font-mono text-lg text-muted uppercase tracking-wide mb-2" data-i18n="en">About me</h2>
-    <h2 class="font-mono text-lg text-muted uppercase tracking-wide mb-2" data-i18n="pt">Sobre mim</h2>
-    <p class="text-white text-lg max-w-xl leading-relaxed" data-i18n="en">
-      Computer Science student at <a href="https://www.idp.edu.br/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">IDP</a>, currently an intern at the Engineering
-      Coordination of <a href="https://www.gov.br/cnpq" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">CNPq</a>, a Brazilian federal government agency. I work
-      with ETL and contribute to initiatives focused on innovation with
-      artificial intelligence.
-    </p>
-    <a href={`${import.meta.env.BASE_URL}trajetoria`} class="inline-block mt-4 font-mono text-sm text-accent hover:underline" data-i18n="en">
-      See my journey &rarr;
-    </a>
-    <p class="text-white text-lg max-w-xl leading-relaxed" data-i18n="pt">
-      Estudante de Ciência da Computação no <a href="https://www.idp.edu.br/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">IDP</a>, atualmente estagiária na
-      Coordenação de Engenharia do <a href="https://www.gov.br/cnpq" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">CNPq</a>, órgão do governo federal brasileiro.
-      Trabalho com ETL e contribuo com iniciativas voltadas à inovação em
-      inteligência artificial.
-    </p>
-    <a href={`${import.meta.env.BASE_URL}trajetoria`} class="inline-block mt-4 font-mono text-sm text-accent hover:underline" data-i18n="pt">
-      Conheça a minha trajetória &rarr;
-    </a>
-  </section>
-
-  <section class="mb-16">
-    <h2 class="font-mono text-xs text-muted uppercase tracking-wide mb-2" data-i18n="en">Experience</h2>
-    <h2 class="font-mono text-xs text-muted uppercase tracking-wide mb-2" data-i18n="pt">Experiência</h2>
-    <div data-i18n="en">
-      <p class="text-muted max-w-xl leading-relaxed">
-        Intern, Engineering Coordination × CNPq — <a href={`${import.meta.env.BASE_URL}projects/cnpq-semantic-analysis`} class="text-accent hover:underline">read more</a>
+    <div class="flex-1 min-w-[260px]">
+      <h1 class="font-display text-4xl font-semibold leading-tight tracking-tight text-ink">Larissa Böhm Araújo</h1>
+      <p class="mt-2 text-lg italic text-muted leading-normal" data-i18n="en">
+        Computer Science undergraduate — Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP), Brasília
       </p>
-      <p class="text-muted max-w-xl leading-relaxed mt-2">
-        Developer, Sprint IDP × BYD — <a href="https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_sprintidp-tecnologia-inovaaexaeto-activity-7350540861073436673-9of5?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">read more</a>
+      <p class="mt-2 text-lg italic text-muted leading-normal" data-i18n="pt">
+        Graduanda em Ciência da Computação — Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP), Brasília
       </p>
-      <p class="text-muted max-w-xl leading-relaxed mt-2">
-        Participant, Innovation Hub × IDP — <a href="https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_participar-do-hub-de-inova%C3%A7%C3%A3o-foi-uma-oportunidade-activity-7263250077865963521-PFAw?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">read more</a>
+      <p class="mt-4 font-mono text-[13px] text-muted leading-loose">
+        <span data-i18n="en">Name in bibliographic citations:</span><span data-i18n="pt">Nome em citações bibliográficas:</span>
+        <strong class="font-medium text-ink whitespace-nowrap">ARAÚJO, L. B.</strong><br />
+        <a href="http://lattes.cnpq.br/5682267720222263" target="_blank" rel="noopener noreferrer" class="link"><span data-i18n="en">Lattes CV</span><span data-i18n="pt">Currículo Lattes</span></a>
+        · <a href="https://github.com/lalabohm" target="_blank" rel="noopener noreferrer" class="link">GitHub</a>
+        · <a href="https://www.linkedin.com/in/larissa-b%C3%B6hm-77b538288/" target="_blank" rel="noopener noreferrer" class="link">LinkedIn</a>
+        · <a href={cvHref} download="Larissa_Bohm_Araujo_CV.pdf" class="link"><span data-i18n="en">Download CV (PDF)</span><span data-i18n="pt">Baixar CV (PDF)</span></a>
       </p>
     </div>
-    <div data-i18n="pt">
-      <p class="text-muted max-w-xl leading-relaxed">
-        Estagiária, Coordenação de Engenharia × CNPq — <a href={`${import.meta.env.BASE_URL}projects/cnpq-semantic-analysis`} class="text-accent hover:underline">saiba mais</a>
-      </p>
-      <p class="text-muted max-w-xl leading-relaxed mt-2">
-        Desenvolvedora, Sprint IDP × BYD — <a href="https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_sprintidp-tecnologia-inovaaexaeto-activity-7350540861073436673-9of5?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">saiba mais</a>
-      </p>
-      <p class="text-muted max-w-xl leading-relaxed mt-2">
-        Participante, Hub de Inovação × IDP — <a href="https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_participar-do-hub-de-inova%C3%A7%C3%A3o-foi-uma-oportunidade-activity-7263250077865963521-PFAw?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">saiba mais</a>
-      </p>
+  </section>
+
+  <section class="mb-14">
+    <h2 class="section-title"><span data-i18n="en">About</span><span data-i18n="pt">Apresentação</span></h2>
+    <p class="text-lg md:text-[19px] leading-relaxed text-ink" data-i18n="en">
+      Computer Science undergraduate at IDP University in Brasília. Member of CtrlAlt+Delas, IDP's women-in-technology
+      group, working on the extension project Cyber nas Escolas, focused on cybersecurity education. Member of IDP's
+      IEEE Student Branch (IES and WIE).
+    </p>
+    <p class="text-lg md:text-[19px] leading-relaxed text-ink" data-i18n="pt">
+      Graduanda em Ciência da Computação pela Universidade IDP, em Brasília. Membro do CtrlAlt+Delas, grupo de
+      mulheres na tecnologia do IDP, no qual atua no projeto de extensão Cyber nas Escolas, de educação em segurança
+      cibernética. Membro do Ramo Estudantil IEEE do IDP (IES e WIE).
+    </p>
+  </section>
+
+  <section id="pesquisa" class="mb-14 scroll-mt-6">
+    <h2 class="section-title"><span data-i18n="en">Research interests</span><span data-i18n="pt">Interesses de pesquisa</span></h2>
+    <div class="grid gap-3.5 sm:grid-cols-2">
+      {interests.map((it, i) => (
+        <div class={`bg-card border border-line border-t-[3px] ${it.color} px-[18px] py-4`}>
+          <p class={`font-mono text-xs ${it.num}`}>0{i + 1}</p>
+          <p class="mt-1.5 text-lg font-semibold text-ink" data-i18n="en">{it.en.t}</p>
+          <p class="mt-1.5 text-lg font-semibold text-ink" data-i18n="pt">{it.pt.t}</p>
+          <p class="mt-1 text-base leading-relaxed text-body" data-i18n="en" set:html={it.en.d} />
+          <p class="mt-1 text-base leading-relaxed text-body" data-i18n="pt" set:html={it.pt.d} />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="mb-14">
+    <h2 class="section-title"><span data-i18n="en">Current positions</span><span data-i18n="pt">Atuação atual</span></h2>
+    <div class="flex flex-col gap-5">
+      {current.map((c) => (
+        <div class="grid grid-cols-1 sm:grid-cols-[130px_minmax(0,1fr)] gap-x-5 gap-y-1">
+          <span class="font-mono text-[13px] text-primary sm:pt-1">
+            <span data-i18n="en">{c.date.en}</span><span data-i18n="pt">{c.date.pt}</span>
+          </span>
+          <div>
+            <p class="text-lg font-semibold text-ink" data-i18n="en">{c.en.t}</p>
+            <p class="text-lg font-semibold text-ink" data-i18n="pt">{c.pt.t}</p>
+            <p class="mt-1 text-[17px] leading-relaxed text-body" data-i18n="en">
+              {c.en.d} {c.href && c.en.link && <a href={c.href} class="link">{c.en.link}</a>}
+            </p>
+            <p class="mt-1 text-[17px] leading-relaxed text-body" data-i18n="pt">
+              {c.pt.d} {c.href && c.pt.link && <a href={c.href} class="link">{c.pt.link}</a>}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <a href={`${base}trajetoria`} class="link inline-block mt-5 text-base">
+      <span data-i18n="en">Full journey &rarr;</span><span data-i18n="pt">Trajetória completa &rarr;</span>
+    </a>
+  </section>
+
+  <section class="mb-14">
+    <h2 class="section-title"><span data-i18n="en">Research projects</span><span data-i18n="pt">Projetos de pesquisa</span></h2>
+    <div>
+      {pairs.map((pair) => <BilingualProjectEntry pair={pair} />)}
+    </div>
+    <a href={`${base}projects`} class="link inline-block mt-4 text-base">
+      <span data-i18n="en">All projects &rarr;</span><span data-i18n="pt">Todos os projetos &rarr;</span>
+    </a>
+  </section>
+
+  <section class="mb-14">
+    <h2 class="section-title"><span data-i18n="en">Publications</span><span data-i18n="pt">Produção científica</span></h2>
+    <p class="text-[17px] leading-relaxed text-body" data-i18n="en">
+      No papers published yet. Work will be listed here as ABNT references, with DOI and PDF, as it is submitted and
+      published.
+    </p>
+    <p class="text-[17px] leading-relaxed text-body" data-i18n="pt">
+      Ainda não há artigos publicados. Os trabalhos aparecerão aqui em formato de referência ABNT, com DOI e PDF, à
+      medida que forem submetidos e publicados.
+    </p>
+    <div class="mt-4 px-5 py-4 bg-amber-tint border border-dashed border-amber rounded-sm text-base leading-relaxed text-muted">
+      <span class="font-mono text-xs tracking-wide text-amber">
+        <span data-i18n="en">FORMAT EXAMPLE</span><span data-i18n="pt">EXEMPLO DE FORMATO</span>
+      </span><br />
+      ARAÚJO, L. B. [<span data-i18n="en">Paper title</span><span data-i18n="pt">Título do artigo</span>].
+      <em>[<span data-i18n="en">Journal or conference</span><span data-i18n="pt">Nome do periódico ou evento</span>]</em>,
+      [<span data-i18n="en">city</span><span data-i18n="pt">cidade</span>], v. [x], n. [x], p. [x–x],
+      [<span data-i18n="en">year</span><span data-i18n="pt">ano</span>]. DOI: [doi].
     </div>
   </section>
 
   <section>
-    <h2 class="font-mono text-xs text-muted uppercase tracking-wide mb-2" data-i18n="en">Featured projects</h2>
-    <h2 class="font-mono text-xs text-muted uppercase tracking-wide mb-2" data-i18n="pt">Projetos em destaque</h2>
-    <div>
-      {pairs.map((pair) => <BilingualProjectEntry pair={pair} />)}
+    <h2 class="section-title"><span data-i18n="en">Education</span><span data-i18n="pt">Formação</span></h2>
+    <div class="grid grid-cols-1 sm:grid-cols-[130px_minmax(0,1fr)] gap-x-5 gap-y-1">
+      <span class="font-mono text-[13px] text-primary sm:pt-1">2023 – 2027</span>
+      <p class="text-[17px] leading-relaxed text-ink">
+        <span data-i18n="en">Bachelor's degree in Computer Science — IDP, Brasília</span>
+        <span data-i18n="pt">Bacharelado em Ciência da Computação — IDP, Brasília</span><br />
+        <span class="text-base italic text-muted" data-i18n="en">Jan 2023 – Jul 2027 (expected completion)</span>
+        <span class="text-base italic text-muted" data-i18n="pt">Jan 2023 – jul 2027 (previsão de conclusão)</span>
+      </p>
     </div>
   </section>
 </BaseLayout>

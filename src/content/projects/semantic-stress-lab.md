@@ -2,6 +2,7 @@
 title: "semantic-stress-lab"
 summary: "Adversarial benchmark testing how literary syntax (hyperbaton, neologism, metaphor) degrades embedding fidelity and induces LLM hallucination in Portuguese texts."
 stack: ["BGE-M3", "LaBSE", "EmbeddingGemma", "Python"]
+subtitle: "effects of literary syntax on embedding fidelity in Portuguese"
 status: "in progress"
 metrics: ["25 annotated pairs", "3 embedding models compared", "Mean cosine similarity: 0.76 (BGE-M3)"]
 repoUrl: "https://github.com/lalabohm/semantic-stress-lab"

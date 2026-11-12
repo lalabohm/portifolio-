@@ -11,6 +11,10 @@ const projects = defineCollection({
     repoUrl: z.string().url().optional(),
     date: z.date(),
     featured: z.boolean().default(false),
+    subtitle: z.string().optional(), // shown after the title, e.g. the paper-style title
+    award: z.string().optional(), // prize / placement, shown highlighted
+    abstract: z.string().optional(), // when set, the project page shows a "Resumo/Abstract" box
+    keywords: z.array(z.string()).optional(),
   }),
 });
 
@@ -31,7 +35,7 @@ const trajetoria = defineCollection({
   schema: z.object({
     title: z.string(),
     org: z.string(),
-    type: z.enum(['profissional', 'pesquisa', 'extensao', 'voluntariado']),
+    type: z.enum(['profissional', 'pesquisa', 'extensao', 'voluntariado', 'formacao']),
     role: z.string(),
     dateStart: z.date(),
     dateEnd: z.date().nullable().optional(), // null/ausente = "atual"

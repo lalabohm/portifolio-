@@ -1,6 +1,6 @@
 ---
 import ProjectEntry from './ProjectEntry.astro';
-import { STATUS_LABEL, type ProjectPair } from '../lib/projects';
+import { STATUS_LABEL, STATUS_STYLE, type ProjectPair } from '../lib/projects';
 
 interface Props {
   pair: ProjectPair;
@@ -10,28 +10,40 @@ const { pair } = Astro.props;
 const enData = pair.en.data;
 const ptData = pair.pt?.data ?? enData;
 const status = STATUS_LABEL[enData.status] ?? { en: enData.status, pt: enData.status };
+const statusClass = STATUS_STYLE[enData.status] ?? 'bg-surface text-muted';
 const href = `${import.meta.env.BASE_URL}projects/${pair.slug}`;
+const year = enData.date.getUTCFullYear();
 ---
 
 <div data-i18n="en">
   <ProjectEntry
     title={enData.title}
+    subtitle={enData.subtitle}
     summary={enData.summary}
     stack={enData.stack}
     status={status.en}
-    metrics={enData.metrics}
+    statusClass={statusClass}
+    year={year}
+    award={enData.award}
+    awardLabel="award"
     repoUrl={enData.repoUrl}
     href={href}
+    labels={{ summary: 'details', code: 'code' }}
   />
 </div>
 <div data-i18n="pt">
   <ProjectEntry
     title={ptData.title}
+    subtitle={ptData.subtitle}
     summary={ptData.summary}
     stack={ptData.stack}
     status={status.pt}
-    metrics={ptData.metrics}
+    statusClass={statusClass}
+    year={year}
+    award={ptData.award}
+    awardLabel="premiado"
     repoUrl={ptData.repoUrl}
     href={href}
+    labels={{ summary: 'detalhes', code: 'código' }}
   />
 </div>

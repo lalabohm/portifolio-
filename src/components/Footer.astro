@@ -1,14 +1,17 @@
 ---
 const year = new Date().getFullYear();
+const base = import.meta.env.BASE_URL;
 ---
 
 <footer class="w-full border-t border-line">
-  <div class="max-w-3xl mx-auto px-6 py-8 flex justify-between font-mono text-xs text-muted">
-    <span>&copy; {year}</span>
-    <div class="flex gap-4">
+  <div class="max-w-3xl mx-auto px-6 py-8 flex flex-wrap justify-between gap-x-6 gap-y-3 font-mono text-xs text-muted">
+    <span>&copy; {year} Larissa Böhm Araújo · Brasília, DF</span>
+    <div class="flex flex-wrap gap-4">
+      <a href="http://lattes.cnpq.br/5682267720222263" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors">lattes</a>
       <a href="https://github.com/lalabohm" class="hover:text-accent transition-colors">github</a>
       <a href="https://www.linkedin.com/in/larissa-b%C3%B6hm-77b538288/" class="hover:text-accent transition-colors">linkedin</a>
       <a href="mailto:larissabohmaraujo@gmail.com" class="hover:text-accent transition-colors">email</a>
+      <a href={`${base}cv/Larissa_Bohm_Araujo_CV.pdf`} download="Larissa_Bohm_Araujo_CV.pdf" class="hover:text-accent transition-colors">cv (pdf)</a>
     </div>
   </div>
 </footer>

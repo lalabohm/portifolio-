@@ -2,6 +2,7 @@
 title: "semantic-stress-lab"
 summary: "Benchmark adversarial que testa como a sintaxe literária (hipérbato, neologismo, metáfora) degrada a fidelidade de embeddings e induz alucinação em LLMs em textos em português."
 stack: ["BGE-M3", "LaBSE", "EmbeddingGemma", "Python"]
+subtitle: "efeitos da sintaxe literária na fidelidade de embeddings em português"
 status: "in progress"
 metrics: ["25 pares anotados", "3 modelos de embedding comparados", "Similaridade média de cosseno: 0.76 (BGE-M3)"]
 repoUrl: "https://github.com/lalabohm/semantic-stress-lab"

@@ -5,7 +5,7 @@ stack: ["MCP", "Python", "LLM security", "Threat modeling"]
 status: "in progress"
 metrics: []
 date: 2026-01-01
-featured: true
+featured: false
 ---
 
 SMGA propõe uma camada de segurança para pipelines de agentes LLM que usam o Model Context Protocol (MCP).

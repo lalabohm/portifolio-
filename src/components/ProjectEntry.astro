@@ -1,69 +1,44 @@
 ---
 interface Props {
   title: string;
+  subtitle?: string;
   summary: string;
   stack: string[];
   status: string;
-  metrics?: string[];
+  statusClass: string;
+  year: number;
+  award?: string;
+  awardLabel: string;
   href: string;
   repoUrl?: string;
+  labels: { summary: string; code: string };
 }
-const { title, summary, stack, status, metrics = [], href, repoUrl } = Astro.props;
-
-// Rough GitHub-style "language" dot colors for recognizable stack entries.
-// Anything not listed falls back to the site's accent gold.
-const LANG_COLORS: Record<string, string> = {
-  python: '#3572A5',
-  typescript: '#3178C6',
-  javascript: '#F1E05A',
-  docker: '#384D54',
-  mcp: '#6E40C9',
-  ml: '#DA5B0B',
-  'llm security': '#C9A15A',
-  'threat modeling': '#8B9198',
-};
-const primary = stack[0] ?? '';
-const dotColor = LANG_COLORS[primary.toLowerCase()] ?? '#C9A15A';
+const { title, subtitle, summary, stack, status, statusClass, year, award, awardLabel, href, repoUrl, labels } =
+  Astro.props;
 ---
 
-<div class="group flex h-full flex-col rounded-md border border-line bg-surface p-4 transition-colors hover:border-accent">
-  <div class="flex items-center gap-2">
-    <svg viewBox="0 0 16 16" width="16" height="16" class="shrink-0 fill-muted">
-      <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path>
-    </svg>
-    <a href={href} class="min-w-0 no-underline">
-      <h3 class="font-display text-base text-accent truncate hover:underline">
-        {title}
-      </h3>
+<article class="py-5 border-b border-line2">
+  <p class="font-mono text-xs text-muted tracking-wide flex flex-wrap items-center gap-2">
+    <span>{year}</span>
+    <span aria-hidden="true">·</span>
+    <span class={`pill ${statusClass}`}>{status}</span>
+    {award && <span class="pill bg-accent-soft text-accent">{awardLabel}</span>}
+  </p>
+  <h3 class="mt-2 text-xl font-semibold leading-snug">
+    <a href={href} class="text-ink hover:text-accent transition-colors no-underline">
+      {title}{subtitle && <span class="font-normal">: {subtitle}</span>}
     </a>
-    <span class="ml-auto shrink-0 rounded-full border border-line px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide text-muted">
-      {status}
-    </span>
-  </div>
-
-  <a href={href} class="no-underline">
-    <p class="mt-3 text-sm text-muted leading-relaxed line-clamp-3">{summary}</p>
-  </a>
-
-  {metrics.length > 0 && (
-    <ul class="mt-3 font-mono text-xs text-muted flex flex-col gap-1">
-      {metrics.slice(0, 2).map((m) => <li>— {m}</li>)}
-    </ul>
-  )}
-
-  <div class="mt-auto pt-4 flex flex-wrap items-center gap-x-2 gap-y-2 font-mono text-xs text-muted">
-    {primary && (
-      <span class="flex items-center gap-1.5 shrink-0">
-        <span class="w-2.5 h-2.5 rounded-full" style={`background-color:${dotColor}`}></span>
-        {primary}
-      </span>
-    )}
-    {stack.length > 1 && <span class="shrink-0 text-muted/50">&middot;</span>}
-    {stack.length > 1 && <span class="truncate">{stack.slice(1).join(', ')}</span>}
+  </h3>
+  <p class="mt-2 text-[17px] leading-relaxed text-body">{summary}</p>
+  {award && <p class="mt-2 text-base text-body"><strong class="font-semibold text-ink">{award}</strong></p>}
+  <p class="mt-2 font-mono text-xs text-muted">{stack.join(' · ')}</p>
+  <p class="mt-2 font-mono text-[13px]">
+    <a href={href} class="link">{labels.summary}</a>
     {repoUrl && (
-      <a href={repoUrl} target="_blank" rel="noopener noreferrer" class="ml-auto shrink-0 text-accent hover:underline">
-        github &rarr;
-      </a>
+      <>
+        {' · '}
+        <a href={repoUrl} target="_blank" rel="noopener noreferrer" class="link">{labels.code}</a>
+      </>
     )}
-  </div>
-</div>
+  </p>
+</article>

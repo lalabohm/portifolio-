@@ -4,7 +4,7 @@ org: "IDP"
 type: pesquisa
 role: "Pesquisadora"
 dateStart: 2026-05-01
-summary: "Membro do Grupo de Pesquisa em Cognição e Tecnologias Aplicadas (GTA) do IDP, desde maio de 2026."
+summary: "Membro, desde maio de 2026, do Grupo de Pesquisa em Cognição e Tecnologias Aplicadas (GTA) do IDP, grupo ativo desde 2024."
 ---
 
 Membro do Grupo de Pesquisa em Cognição e Tecnologias Aplicadas (GTA)
