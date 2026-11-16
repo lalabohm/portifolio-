@@ -5,7 +5,14 @@ import { getCollection } from 'astro:content';
 const writeups = (await getCollection('writeups'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const highlights = [
+const highlights: { title: string; description: { en: string; pt: string }; href?: string }[] = [
+  {
+    title: 'Tabletop Exercise (TTX): Clínica de Segurança e Privacidade Digital',
+    description: {
+      en: 'Nov 2026 · WPOS-26: CIC Undergraduate and Graduate Workshop · UnB, Computer Lab (LINF), ICC Norte — Simulated ransomware attack on a hospital. Working in a multidisciplinary group as part of the CSIRT (ETIR), I took part in crisis management, decision-making and LGPD compliance.',
+      pt: 'Nov 2026 · WPOS-26: Workshop de Graduação e Pós-graduação do CIC · UnB, Laboratório de Informática (LINF), ICC Norte — Simulação de um ataque de ransomware em ambiente hospitalar. Em grupo multidisciplinar, atuei como integrante da ETIR (Equipe de Tratamento e Resposta a Incidentes) na gestão de crise, na tomada de decisão e na conformidade com a LGPD.',
+    },
+  },
   {
     title: 'Pink Hat: Pwning Like a Girl',
     description: {
@@ -48,22 +55,23 @@ const highlights = [
 ];
 ---
 
-<BaseLayout title="CTF and Hackathons — Larissa Böhm Araújo">
-  <h1 class="font-display text-2xl text-ink mb-8" data-i18n="en">CTF and Hackathons</h1>
-  <h1 class="font-display text-2xl text-ink mb-8" data-i18n="pt">CTF e Hackathons</h1>
+<BaseLayout title="Events — Larissa Böhm Araújo">
+  <h1 class="font-display text-2xl text-ink mb-8" data-i18n="en">Events</h1>
+  <h1 class="font-display text-2xl text-ink mb-8" data-i18n="pt">Eventos</h1>
 
   <div class="mb-8">
     {highlights.map((h) => (
-      <a href={h.href} target="_blank" rel="noopener noreferrer" class="group block border-t border-line py-6 no-underline">
-        <h3 class="font-display text-lg text-ink group-hover:text-accent transition-colors">
+      <a
+        href={h.href}
+        target={h.href ? '_blank' : undefined}
+        rel={h.href ? 'noopener noreferrer' : undefined}
+        class="group block border-t border-line py-6 no-underline"
+      >
+        <h3 class={`font-display text-lg text-ink ${h.href ? 'group-hover:text-accent transition-colors' : ''}`}>
           {h.title}
         </h3>
-        {h.description && (
-          <>
-            <p class="text-muted mt-1 leading-relaxed" data-i18n="en">{h.description.en}</p>
-            <p class="text-muted mt-1 leading-relaxed" data-i18n="pt">{h.description.pt}</p>
-          </>
-        )}
+        <p class="text-muted mt-1 leading-relaxed" data-i18n="en">{h.description.en}</p>
+        <p class="text-muted mt-1 leading-relaxed" data-i18n="pt">{h.description.pt}</p>
       </a>
     ))}
   </div>
