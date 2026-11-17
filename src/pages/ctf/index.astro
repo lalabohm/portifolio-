@@ -5,76 +5,195 @@ import { getCollection } from 'astro:content';
 const writeups = (await getCollection('writeups'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const highlights: { title: string; description: { en: string; pt: string }; href?: string }[] = [
-  {
-    title: 'Tabletop Exercise (TTX): Clínica de Segurança e Privacidade Digital',
-    description: {
-      en: 'Nov 2026 · WPOS-26: CIC Undergraduate and Graduate Workshop · UnB, Computer Lab (LINF), ICC Norte — Simulated ransomware attack on a hospital. Working in a multidisciplinary group as part of the CSIRT (ETIR), I took part in crisis management, decision-making and LGPD compliance.',
-      pt: 'Nov 2026 · WPOS-26: Workshop de Graduação e Pós-graduação do CIC · UnB, Laboratório de Informática (LINF), ICC Norte — Simulação de um ataque de ransomware em ambiente hospitalar. Em grupo multidisciplinar, atuei como integrante da ETIR (Equipe de Tratamento e Resposta a Incidentes) na gestão de crise, na tomada de decisão e na conformidade com a LGPD.',
-    },
-  },
+type Category = 'ctf' | 'hackathon' | 'workshop' | 'talk';
+
+interface EventItem {
+  title: string;
+  category: Category;
+  when?: { en: string; pt: string };
+  org?: string;
+  result?: { en: string; pt: string };
+  description: { en: string; pt: string };
+  href?: string;
+}
+
+const groups: { id: Category; en: string; pt: string; color: string }[] = [
+  { id: 'ctf', en: 'Capture The Flag (CTF)', pt: 'Capture The Flag (CTF)', color: 'bg-accent' },
+  { id: 'hackathon', en: 'Hackathons', pt: 'Hackathons', color: 'bg-primary' },
+  { id: 'workshop', en: 'Workshops and exercises', pt: 'Oficinas, workshops e simulações', color: 'bg-teal' },
+  { id: 'talk', en: 'Talks', pt: 'Palestras', color: 'bg-amber' },
+];
+
+const events: EventItem[] = [
   {
     title: 'Pink Hat: Pwning Like a Girl',
+    category: 'ctf',
+    org: 'IDP · UnB · UnBreakable',
     description: {
-      en: 'First edition of the CTF hosted by IDP and UnB, with challenges by UnB\'s offensive security group UnBreakable — plus talks, games, workshops, and a panel on women\'s careers in cybersecurity.',
+      en: "First edition of the CTF hosted by IDP and UnB, with challenges by UnB's offensive security group UnBreakable — plus talks, games, workshops, and a panel on women's careers in cybersecurity.",
       pt: 'Primeira edição do CTF promovido pelo IDP e pela UnB, com desafios do grupo de segurança ofensiva UnBreakable — além de palestras, jogos, oficinas e um painel sobre a carreira de mulheres em cibersegurança.',
     },
     href: 'https://www.linkedin.com/posts/unbreakableunb_pink-hat-pwning-like-a-girl-primeira-edi%C3%A7%C3%A3o-activity-7507790548619931649-Wmzp?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0',
   },
   {
     title: 'BSides Fortaleza',
-    description: { en: 'A CTF from Hackathon Cariri — placed 2nd.', pt: 'Um CTF do Hackathon Cariri — 2º lugar.' },
+    category: 'ctf',
+    org: 'Hackathon Cariri',
+    result: { en: '2nd place', pt: '2º lugar' },
+    description: { en: 'A CTF from Hackathon Cariri.', pt: 'Um CTF do Hackathon Cariri.' },
     href: 'https://lnkd.in/p/dBHBr-Ee',
   },
   {
-    title: 'IEEE Cybersecurity Hackathon 2026',
-    description: { en: '2nd place in Capture The Flag among 25 teams.', pt: '2º lugar no Capture The Flag entre 25 equipes.' },
-    href: 'https://lnkd.in/p/dk-6PHk4',
-  },
-  {
     title: 'Capture The Flag IDP 2025',
+    category: 'ctf',
+    when: { en: '2025', pt: '2025' },
+    org: 'IDP',
     description: {
-      en: 'Hosted by the Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP) — a 24-hour event.',
-      pt: 'Promovido pelo Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP) — um evento de 24 horas.',
+      en: 'A 24-hour CTF hosted by the Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP).',
+      pt: 'CTF de 24 horas promovido pelo Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP).',
     },
     href: 'https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_ctf-capturetheflag-hackathon-activity-7394708159493308416-O5h8?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0',
   },
   {
     title: 'Capture The Flag IDP 2024',
+    category: 'ctf',
+    when: { en: '2024', pt: '2024' },
+    org: 'IDP',
     description: {
-      en: 'Hosted by the Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP) — a 24-hour event.',
-      pt: 'Promovido pelo Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP) — um evento de 24 horas.',
+      en: 'A 24-hour CTF hosted by the Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP).',
+      pt: 'CTF de 24 horas promovido pelo Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP).',
     },
     href: 'https://www.linkedin.com/posts/larissa-b%C3%B6hm-77b538288_o-hackathon-em-formato-capture-the-flag-foi-activity-7274440185822498817-O2rA?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0',
   },
   {
+    title: 'IEEE Cybersecurity Hackathon 2026',
+    category: 'hackathon',
+    when: { en: '2026', pt: '2026' },
+    org: 'IEEE',
+    result: { en: '2nd in CTF · 4th overall', pt: '2º no CTF · 4º geral' },
+    description: {
+      en: 'International competition with 190 participants from 34 countries. Our team placed 2nd in the Capture The Flag among 25 teams and reached 4th place overall in the IEEE Computer Society track with Pangeia.',
+      pt: 'Competição internacional com 190 participantes de 34 países. Nossa equipe ficou em 2º lugar no Capture The Flag entre 25 equipes e alcançou o 4º lugar geral na trilha da IEEE Computer Society com o Pangeia.',
+    },
+    href: 'https://lnkd.in/p/dk-6PHk4',
+  },
+  {
     title: 'Hackathon IDP 2024',
+    category: 'hackathon',
+    when: { en: '2024', pt: '2024' },
+    org: 'IDP',
     description: { en: 'Digital transformation through education software.', pt: 'Transformação digital por meio de software educacional.' },
     href: 'https://www.linkedin.com/posts/lucas-barreto-31017227b_continuando-as-postagens-do-evento-hackathon-ugcPost-7202148012133912576-M9p6?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0',
   },
+  {
+    title: 'Tabletop Exercise (TTX): Clínica de Segurança e Privacidade Digital',
+    category: 'workshop',
+    when: { en: 'Nov 2026', pt: 'Nov 2026' },
+    org: 'WPOS-26 · UnB',
+    description: {
+      en: 'Part of WPOS-26: CIC Undergraduate and Graduate Workshop, at UnB (Computer Lab, LINF, ICC Norte). Simulated ransomware attack on a hospital: working in a multidisciplinary group as part of the CSIRT (ETIR), I took part in crisis management, decision-making and LGPD compliance.',
+      pt: 'Atividade do WPOS-26: Workshop de Graduação e Pós-graduação do CIC, na UnB (Laboratório de Informática, LINF, ICC Norte). Simulação de um ataque de ransomware em ambiente hospitalar: em grupo multidisciplinar, atuei como integrante da ETIR (Equipe de Tratamento e Resposta a Incidentes) na gestão de crise, na tomada de decisão e na conformidade com a LGPD.',
+    },
+  },
+  {
+    title: 'Workshop de CTF',
+    category: 'workshop',
+    org: 'Ramo Estudantil IEEE IDP',
+    description: {
+      en: 'Introduction to Capture The Flag challenges — cryptography, web, logic, programming, networking and digital forensics — with Enzo Teles (S3r4ph1el), offensive security analyst specialized in pentesting and Red Team.',
+      pt: 'Introdução aos desafios de Capture The Flag — criptografia, web, lógica, programação, redes e investigação digital — com Enzo Teles (S3r4ph1el), analista de segurança ofensiva especializado em pentest e Red Team.',
+    },
+    href: 'https://www.linkedin.com/posts/ieee-student-branch-idp_workshop-de-ctf-que-introdu%C3%A7%C3%A3o-incr%C3%ADvel-activity-7496960169139142656-2ucq?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXYqU8BQmzGNuTXu5GroCkUHA1nIMTN7e0',
+  },
+  {
+    title: 'Oficina de Processamento de Imagens',
+    category: 'workshop',
+    when: { en: 'Oct 20–21', pt: '20 e 21 de outubro' },
+    org: 'Ramo Estudantil IEEE IDP',
+    description: {
+      en: 'Hands-on workshop with Prof. Rafael Paes on computer vision fundamentals and image processing and analysis, with applications to satellite imagery, sports and everyday scenes.',
+      pt: 'Oficina prática com o professor Rafael Paes sobre fundamentos de visão computacional e técnicas de processamento e análise de imagens, com aplicações em imagens de satélite, esportes e cenas do dia a dia.',
+    },
+    href: 'https://lnkd.in/p/d3-PkJrK',
+  },
+  {
+    title: 'CIBERATAQUES: Entendendo e Combatendo o Ransomware',
+    category: 'talk',
+    org: 'Ramo Estudantil IEEE IDP',
+    description: {
+      en: 'Talk by Rafael Salema Marques (SWaNk) on how ransomware attacks work, their real-world impact, defense strategies and tools, and ethics in cyberspace.',
+      pt: 'Palestra de Rafael Salema Marques (SWaNk) sobre como funcionam os ataques de ransomware, seus impactos no mundo real, estratégias e ferramentas de defesa e a ética no ciberespaço.',
+    },
+    href: 'https://lnkd.in/p/d3gBn3K4',
+  },
 ];
+
+const sections = groups
+  .map((g) => ({ ...g, items: events.filter((e) => e.category === g.id) }))
+  .filter((g) => g.items.length > 0);
 ---
 
 <BaseLayout title="Events — Larissa Böhm Araújo">
-  <h1 class="font-display text-2xl text-ink mb-8" data-i18n="en">Events</h1>
-  <h1 class="font-display text-2xl text-ink mb-8" data-i18n="pt">Eventos</h1>
+  <h1 class="font-display text-4xl font-semibold tracking-tight text-ink">
+    <span data-i18n="en">Events</span><span data-i18n="pt">Eventos</span>
+  </h1>
+  <p class="mt-2.5 text-lg leading-relaxed text-muted" data-i18n="en">
+    Competitions, workshops and talks I took part in, grouped by type.
+  </p>
+  <p class="mt-2.5 text-lg leading-relaxed text-muted" data-i18n="pt">
+    Competições, oficinas e palestras de que participei, agrupadas por tipo.
+  </p>
 
-  <div class="mb-8">
-    {highlights.map((h) => (
-      <a
-        href={h.href}
-        target={h.href ? '_blank' : undefined}
-        rel={h.href ? 'noopener noreferrer' : undefined}
-        class="group block border-t border-line py-6 no-underline"
-      >
-        <h3 class={`font-display text-lg text-ink ${h.href ? 'group-hover:text-accent transition-colors' : ''}`}>
-          {h.title}
-        </h3>
-        <p class="text-muted mt-1 leading-relaxed" data-i18n="en">{h.description.en}</p>
-        <p class="text-muted mt-1 leading-relaxed" data-i18n="pt">{h.description.pt}</p>
+  <nav class="mt-6 flex flex-wrap gap-2 font-mono text-xs" aria-label="Tipos de evento">
+    {sections.map((g) => (
+      <a href={`#${g.id}`} class="flex items-center gap-2 border border-line rounded-full px-3 py-1.5 text-ink hover:border-accent hover:text-accent transition-colors no-underline">
+        <span aria-hidden="true" class={`inline-block w-2 h-2 rounded-full ${g.color}`}></span>
+        <span data-i18n="en">{g.en}</span><span data-i18n="pt">{g.pt}</span>
+        <span class="text-muted">{g.items.length}</span>
       </a>
     ))}
-  </div>
+  </nav>
+
+  {sections.map((g) => (
+    <section id={g.id} class="mt-11 scroll-mt-6">
+      <h2 class="section-title !mb-1.5 flex items-center gap-2.5">
+        <span aria-hidden="true" class={`inline-block w-2.5 h-2.5 ${g.color}`}></span>
+        <span data-i18n="en">{g.en}</span><span data-i18n="pt">{g.pt}</span>
+      </h2>
+      {g.items.map((e) => (
+        <article class="py-4 border-b border-line2">
+          {(e.when || e.org || e.result) && (
+            <p class="font-mono text-xs text-muted tracking-wide flex flex-wrap items-center gap-2">
+              {e.when && (
+                <span class="text-primary"><span data-i18n="en">{e.when.en}</span><span data-i18n="pt">{e.when.pt}</span></span>
+              )}
+              {e.when && e.org && <span aria-hidden="true">·</span>}
+              {e.org && <span>{e.org}</span>}
+              {e.result && (
+                <span class="pill bg-accent-soft text-accent">
+                  <span data-i18n="en">{e.result.en}</span><span data-i18n="pt">{e.result.pt}</span>
+                </span>
+              )}
+            </p>
+          )}
+          <h3 class="mt-1.5 text-lg font-semibold text-ink">
+            {e.href ? (
+              <a href={e.href} target="_blank" rel="noopener noreferrer" class="text-ink hover:text-accent transition-colors no-underline">{e.title}</a>
+            ) : (
+              e.title
+            )}
+          </h3>
+          <p class="mt-1 text-base leading-relaxed text-body" data-i18n="en">{e.description.en}</p>
+          <p class="mt-1 text-base leading-relaxed text-body" data-i18n="pt">{e.description.pt}</p>
+          {e.href && (
+            <a href={e.href} target="_blank" rel="noopener noreferrer" class="link inline-block mt-1.5 font-mono text-[13px]">
+              <span data-i18n="en">see post &rarr;</span><span data-i18n="pt">ver publicação &rarr;</span>
+            </a>
+          )}
+        </article>
+      ))}
+    </section>
+  ))}
 
   <div>
     {writeups.map((w) => (
