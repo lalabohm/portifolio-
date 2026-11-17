@@ -1,6 +1,6 @@
 ---
-title: "Prevenção de crimes sexuais digitais contra adolescentes"
-subtitle: "intervenção psicossocial em ambiente escolar"
+title: "Onde a plataforma não alcança"
+subtitle: "uma proposta psicossocial de prevenção ao aliciamento online"
 kind: "Artigo em elaboração"
 status: "in progress"
 group: "Grupo de Pesquisa em Cognição e Tecnologias Aplicadas (GTA/IDP)"

@@ -23,5 +23,5 @@ escolas, com o Instituto Gabriel Gastal como parceiro piloto do
 projeto.
 
 O projeto deu origem ao artigo em elaboração
-[“Prevenção de crimes sexuais digitais contra adolescentes”](../../pesquisa/prevencao-crimes-sexuais-digitais/),
+[“Onde a plataforma não alcança: uma proposta psicossocial de prevenção ao aliciamento online”](../../pesquisa/onde-a-plataforma-nao-alcanca/),
 desenvolvido com estudantes de Psicologia do GTA/IDP.

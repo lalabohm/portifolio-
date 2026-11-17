@@ -12,6 +12,6 @@ at IDP, contributing to research at the intersection of cognition and
 applied technologies.
 
 In the group, I work on the paper in preparation
-[“Preventing digital sexual crimes against adolescents: a school-based psychosocial intervention”](../../pesquisa/prevencao-crimes-sexuais-digitais/),
+[“Where the platform cannot reach: a psychosocial proposal for preventing online grooming”](../../pesquisa/onde-a-plataforma-nao-alcanca/),
 developed with Psychology students under the supervision of Prof. Raiane
 Nogueira.

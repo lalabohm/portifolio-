@@ -1,6 +1,6 @@
 ---
-title: "Preventing digital sexual crimes against adolescents"
-subtitle: "a school-based psychosocial intervention"
+title: "Where the platform cannot reach"
+subtitle: "a psychosocial proposal for preventing online grooming"
 kind: "Paper in preparation"
 status: "in progress"
 group: "Research Group on Cognition and Applied Technologies (GTA/IDP)"
