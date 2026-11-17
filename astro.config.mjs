@@ -1,10 +1,9 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
-// Se o repo se chamar "lalabohm.github.io", apague a linha "base".
-// Se o repo tiver outro nome (ex: "portifolio-"), mantenha base com esse nome.
+// O repositório se chama "larissabohm.github.io" (organização larissabohm),
+// então o site fica na raiz do domínio e não precisa de "base".
 export default defineConfig({
-  site: 'https://lalabohm.github.io',
-  base: '/portifolio-/',
+  site: 'https://larissabohm.github.io',
   integrations: [tailwind()],
 });
