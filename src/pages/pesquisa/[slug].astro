@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { STATUS_LABEL, STATUS_STYLE } from '../../lib/projects';
+import { getResearchPairs } from '../../lib/research';
+
+export async function getStaticPaths() {
+  const pairs = await getResearchPairs();
+  return pairs.map((pair) => ({ params: { slug: pair.slug }, props: { pair } }));
+}
+
+const { pair } = Astro.props;
+const enData = pair.en.data;
+const ptData = pair.pt?.data ?? enData;
+const base = import.meta.env.BASE_URL;
+
+const { Content: ContentEn } = await pair.en.render();
+const ContentPt = pair.pt ? (await pair.pt.render()).Content : ContentEn;
+
+const status = STATUS_LABEL[enData.status] ?? { en: enData.status, pt: enData.status };
+const statusClass = STATUS_STYLE[enData.status] ?? 'bg-surface text-muted';
+const year = enData.date.getUTCFullYear();
+
+const langs = [
+  { lang: 'en', data: enData, Content: ContentEn, status: status.en, crumb: 'Home', section: 'Research',
+    abstract: 'Abstract', keywords: 'Keywords', advisor: 'Advisor', team: 'Team', groupLabel: 'Group' },
+  { lang: 'pt', data: ptData, Content: ContentPt, status: status.pt, crumb: 'Início', section: 'Pesquisa',
+    abstract: 'Resumo', keywords: 'Palavras-chave', advisor: 'Orientação', team: 'Equipe', groupLabel: 'Grupo' },
+] as const;
+---
+
+<BaseLayout title={`${enData.title} — Larissa Böhm Araújo`} description={enData.summary}>
+  {langs.map((l) => (
+    <div data-i18n={l.lang}>
+      <p class="mb-7 font-mono text-[13px] text-muted">
+        <a href={base} class="link">{l.crumb}</a> / <a href={`${base}pesquisa`} class="link">{l.section}</a>
+      </p>
+
+      <p class="font-mono text-xs tracking-wide text-primary flex flex-wrap items-center gap-2">
+        <span>{year}</span>
+        <span aria-hidden="true">·</span>
+        <span class={`pill ${statusClass}`}>{l.status}</span>
+        <span class="pill bg-primary-tint text-primary">{l.data.kind}</span>
+      </p>
+      <h1 class="mt-2.5 font-display text-3xl md:text-[34px] font-semibold leading-tight tracking-tight text-ink">{l.data.title}</h1>
+      {l.data.subtitle && (
+        <p class="mt-2 text-xl md:text-[22px] leading-snug italic text-body">{l.data.subtitle}</p>
+      )}
+
+      <dl class="mt-5 grid grid-cols-1 sm:grid-cols-[120px_minmax(0,1fr)] gap-x-4 gap-y-1 text-base">
+        <dt class="font-mono text-[13px] text-muted sm:pt-0.5">{l.groupLabel}</dt>
+        <dd class="text-ink">{l.data.group}</dd>
+        {l.data.advisor && (
+          <>
+            <dt class="font-mono text-[13px] text-muted sm:pt-0.5">{l.advisor}</dt>
+            <dd class="text-ink">{l.data.advisor}</dd>
+          </>
+        )}
+        {l.data.team && (
+          <>
+            <dt class="font-mono text-[13px] text-muted sm:pt-0.5">{l.team}</dt>
+            <dd class="text-ink">{l.data.team}</dd>
+          </>
+        )}
+      </dl>
+
+      {l.data.abstract && (
+        <section class="mt-9 px-5 sm:px-7 py-6 bg-primary-tint border-t-[3px] border-primary border-b border-b-line">
+          <h2 class="text-[15px] font-semibold tracking-[0.12em] uppercase text-primary mb-2.5">{l.abstract}</h2>
+          <p class="text-[17px] leading-[1.7] text-ink text-justify hyphens-auto">{l.data.abstract}</p>
+          {l.data.keywords && l.data.keywords.length > 0 && (
+            <p class="mt-3.5 text-base leading-relaxed text-ink">
+              <strong class="font-semibold">{l.keywords}:</strong> {l.data.keywords.join('; ')}.
+            </p>
+          )}
+        </section>
+      )}
+
+      <article class="prose mt-10 max-w-none">
+        <l.Content />
+      </article>
+    </div>
+  ))}
+</BaseLayout>

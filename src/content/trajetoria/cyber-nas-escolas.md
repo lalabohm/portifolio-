@@ -20,3 +20,7 @@ cyberbullying carried out in Pernambuco.
 
 The material will support the presentations we are bringing to schools,
 with Instituto Gabriel Gastal as the project's pilot partner.
+
+The project gave rise to the paper in preparation
+[“Preventing digital sexual crimes against adolescents”](../../pesquisa/prevencao-crimes-sexuais-digitais/),
+developed with Psychology students from GTA/IDP.

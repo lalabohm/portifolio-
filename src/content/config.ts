@@ -46,4 +46,23 @@ const trajetoria = defineCollection({
   }),
 });
 
-export const collections = { projects, writeups, trajetoria };
+// Academic research (articles, studies), kept apart from code repositories.
+const research = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    subtitle: z.string().optional(),
+    kind: z.string(), // e.g. "Artigo em elaboração"
+    status: z.enum(['in progress', 'completed', 'paused']),
+    group: z.string(), // research group / institution
+    advisor: z.string().optional(),
+    team: z.string().optional(),
+    summary: z.string(),
+    abstract: z.string().optional(),
+    keywords: z.array(z.string()).optional(),
+    date: z.date(),
+    featured: z.boolean().default(true),
+  }),
+});
+
+export const collections = { projects, writeups, trajetoria, research };

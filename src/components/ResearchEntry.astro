@@ -1,0 +1,42 @@
+---
+import { STATUS_LABEL, STATUS_STYLE } from '../lib/projects';
+import type { ResearchPair } from '../lib/research';
+
+interface Props {
+  pair: ResearchPair;
+}
+
+const { pair } = Astro.props;
+const enData = pair.en.data;
+const ptData = pair.pt?.data ?? enData;
+const status = STATUS_LABEL[enData.status] ?? { en: enData.status, pt: enData.status };
+const statusClass = STATUS_STYLE[enData.status] ?? 'bg-surface text-muted';
+const href = `${import.meta.env.BASE_URL}pesquisa/${pair.slug}`;
+const year = enData.date.getUTCFullYear();
+
+const langs = [
+  { lang: 'en', data: enData, status: status.en, advisor: 'Advisor', more: 'details' },
+  { lang: 'pt', data: ptData, status: status.pt, advisor: 'Orientação', more: 'detalhes' },
+] as const;
+---
+
+{langs.map((l) => (
+  <article class="py-5 border-b border-line2" data-i18n={l.lang}>
+    <p class="font-mono text-xs text-muted tracking-wide flex flex-wrap items-center gap-2">
+      <span>{year}</span>
+      <span aria-hidden="true">·</span>
+      <span class={`pill ${statusClass}`}>{l.status}</span>
+      <span class="pill bg-primary-tint text-primary">{l.data.kind}</span>
+    </p>
+    <h3 class="mt-2 text-xl font-semibold leading-snug">
+      <a href={href} class="text-ink hover:text-accent transition-colors no-underline">
+        {l.data.title}{l.data.subtitle && <span class="font-normal">: {l.data.subtitle}</span>}
+      </a>
+    </h3>
+    <p class="mt-2 text-[17px] leading-relaxed text-body">{l.data.summary}</p>
+    <p class="mt-2 text-base italic text-muted">
+      {l.data.group}{l.data.advisor && <> · {l.advisor}: {l.data.advisor}</>}
+    </p>
+    <p class="mt-2 font-mono text-[13px]"><a href={href} class="link">{l.more}</a></p>
+  </article>
+))}

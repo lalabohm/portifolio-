@@ -2,9 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BilingualProjectEntry from '../components/BilingualProjectEntry.astro';
 import { getProjectPairs } from '../lib/projects';
+import ResearchEntry from '../components/ResearchEntry.astro';
+import { getResearchPairs } from '../lib/research';
 
 const base = import.meta.env.BASE_URL;
 const pairs = (await getProjectPairs()).filter((p) => p.en.data.featured);
+const research = (await getResearchPairs()).filter((p) => p.en.data.featured);
 const cvHref = `${base}cv/Larissa_Bohm_Araujo_CV.pdf`;
 
 const interests = [
@@ -49,12 +52,15 @@ const current = [
     date: { en: '2026 – Current', pt: '2026 – Atual' },
     en: {
       t: 'Member — Research Group on Cognition and Applied Technologies (GTA/IDP)',
-      d: 'Group active since 2024; research on human cognition with technologies applied to Psychology and Cognitive Neuroscience.',
+      d: 'Group active since 2024. I work on a paper on preventing digital sexual crimes against adolescents through a school-based intervention.',
+      link: 'see research',
     },
     pt: {
       t: 'Membro — Grupo de Pesquisa em Cognição e Tecnologias Aplicadas (GTA/IDP)',
-      d: 'Grupo ativo desde 2024; pesquisa sobre cognição humana com tecnologias aplicadas à Psicologia e à Neurociência Cognitiva.',
+      d: 'Grupo ativo desde 2024. Atuo em um artigo sobre a prevenção de crimes sexuais digitais contra adolescentes por meio de uma intervenção em ambiente escolar.',
+      link: 'ver pesquisa',
     },
+    href: `${base}pesquisa/prevencao-crimes-sexuais-digitais`,
   },
   {
     date: { en: '2026 – 2027', pt: '2026 – 2027' },
@@ -157,22 +163,32 @@ const current = [
   <section class="mb-14">
     <h2 class="section-title"><span data-i18n="en">Research projects</span><span data-i18n="pt">Projetos de pesquisa</span></h2>
     <div>
+      {research.map((pair) => <ResearchEntry pair={pair} />)}
+    </div>
+  </section>
+
+  <section class="mb-14">
+    <h2 class="section-title"><span data-i18n="en">Repositories</span><span data-i18n="pt">Repositórios</span></h2>
+    <div>
       {pairs.map((pair) => <BilingualProjectEntry pair={pair} />)}
     </div>
     <a href={`${base}projects`} class="link inline-block mt-4 text-base">
-      <span data-i18n="en">All projects &rarr;</span><span data-i18n="pt">Todos os projetos &rarr;</span>
+      <span data-i18n="en">All repositories &rarr;</span><span data-i18n="pt">Todos os repositórios &rarr;</span>
     </a>
   </section>
 
   <section class="mb-14">
     <h2 class="section-title"><span data-i18n="en">Publications</span><span data-i18n="pt">Produção científica</span></h2>
     <p class="text-[17px] leading-relaxed text-body" data-i18n="en">
-      No papers published yet. Work will be listed here as ABNT references, with DOI and PDF, as it is submitted and
-      published.
+      No papers published yet. In preparation:
+      <a href={`${base}pesquisa/prevencao-crimes-sexuais-digitais`} class="link">“Preventing digital sexual crimes against adolescents: a school-based psychosocial intervention”</a>
+      (GTA/IDP). Work will be listed here as ABNT references, with DOI and PDF, as it is submitted and published.
     </p>
     <p class="text-[17px] leading-relaxed text-body" data-i18n="pt">
-      Ainda não há artigos publicados. Os trabalhos aparecerão aqui em formato de referência ABNT, com DOI e PDF, à
-      medida que forem submetidos e publicados.
+      Ainda não há artigos publicados. Em elaboração:
+      <a href={`${base}pesquisa/prevencao-crimes-sexuais-digitais`} class="link">“Prevenção de crimes sexuais digitais contra adolescentes: intervenção psicossocial em ambiente escolar”</a>
+      (GTA/IDP). Os trabalhos aparecerão aqui em formato de referência ABNT, com DOI e PDF, à medida que forem
+      submetidos e publicados.
     </p>
     <div class="mt-4 px-5 py-4 bg-amber-tint border border-dashed border-amber rounded-sm text-base leading-relaxed text-muted">
       <span class="font-mono text-xs tracking-wide text-amber">

@@ -21,3 +21,7 @@ estudo sobre cyberbullying realizado em Pernambuco.
 O material servirá de apoio às apresentações que estamos levando às
 escolas, com o Instituto Gabriel Gastal como parceiro piloto do
 projeto.
+
+O projeto deu origem ao artigo em elaboração
+[“Prevenção de crimes sexuais digitais contra adolescentes”](../../pesquisa/prevencao-crimes-sexuais-digitais/),
+desenvolvido com estudantes de Psicologia do GTA/IDP.

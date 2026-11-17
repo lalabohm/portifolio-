@@ -10,3 +10,8 @@ summary: "Membro, desde maio de 2026, do Grupo de Pesquisa em Cognição e Tecno
 Membro do Grupo de Pesquisa em Cognição e Tecnologias Aplicadas (GTA)
 do IDP, contribuindo com pesquisas na interseção entre cognição e
 tecnologias aplicadas.
+
+No grupo, atuo no artigo em elaboração
+[“Prevenção de crimes sexuais digitais contra adolescentes: intervenção psicossocial em ambiente escolar”](../../pesquisa/prevencao-crimes-sexuais-digitais/),
+desenvolvido com estudantes de Psicologia sob orientação da Profa. Raiane
+Nogueira.

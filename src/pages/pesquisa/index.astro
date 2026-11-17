@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ResearchEntry from '../../components/ResearchEntry.astro';
+import { getResearchPairs } from '../../lib/research';
+
+const pairs = await getResearchPairs();
+---
+
+<BaseLayout title="Research — Larissa Böhm Araújo">
+  <h1 class="font-display text-4xl font-semibold tracking-tight text-ink">
+    <span data-i18n="en">Research</span><span data-i18n="pt">Pesquisa</span>
+  </h1>
+  <p class="mt-2 text-lg text-muted leading-relaxed" data-i18n="en">
+    Academic research projects and papers in progress. Code repositories are listed under
+    <a href={`${import.meta.env.BASE_URL}projects`} class="link">Repositories</a>.
+  </p>
+  <p class="mt-2 text-lg text-muted leading-relaxed" data-i18n="pt">
+    Projetos de pesquisa acadêmica e artigos em andamento. Os repositórios de código estão em
+    <a href={`${import.meta.env.BASE_URL}projects`} class="link">Repositórios</a>.
+  </p>
+  <div class="mt-8 border-t-2 border-accent-soft">
+    {pairs.map((pair) => <ResearchEntry pair={pair} />)}
+  </div>
+</BaseLayout>
