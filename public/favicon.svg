@@ -1,10 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect x="0.5" y="0.5" width="31" height="31" rx="6" fill="#FFFFFF" stroke="#DDD8CE"/>
-  <g fill="none" stroke="#1F3A5A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M6 9.5Q4.2 9.5 4.2 11.3V14.6Q4.2 16 2.8 16Q4.2 16 4.2 17.4V20.7Q4.2 22.5 6 22.5"/>
-    <path d="M26 9.5Q27.8 9.5 27.8 11.3V14.6Q27.8 16 29.2 16Q27.8 16 27.8 17.4V20.7Q27.8 22.5 26 22.5"/>
-    <path d="M8.4 10V22H11.9"/>
-    <path d="M13.7 10V22H15.9Q17.9 22 17.9 19Q17.9 16 15.8 16H13.7M13.7 10H15.6Q17.5 10 17.5 13Q17.5 16 15.6 16"/>
-    <path d="M19.3 22L21.4 10L23.5 22M20.05 18.2H22.75"/>
+  <rect x="0.5" y="0.5" width="31" height="31" rx="6" fill="#FAF8F3" stroke="#DDD8CE"/>
+  <path fill="#1F3A5A" d="M10.2 8H16.6V9.1Q15.2 9.2 15.2 10.4V22.6H19Q20.7 22.6 21.4 19.9H22.4L22 24H10.2V22.9Q11.6 22.8 11.6 21.6V10.4Q11.6 9.2 10.2 9.1Z"/>
+  <g fill="none" stroke="#1F3A5A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7.4 8.5Q5.4 8.5 5.4 10.5V14.4Q5.4 16 3.8 16Q5.4 16 5.4 17.6V21.5Q5.4 23.5 7.4 23.5"/>
+    <path d="M24.6 8.5Q26.6 8.5 26.6 10.5V14.4Q26.6 16 28.2 16Q26.6 16 26.6 17.6V21.5Q26.6 23.5 24.6 23.5"/>
   </g>
 </svg>
