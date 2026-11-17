@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 const writeups = (await getCollection('writeups'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-type Category = 'ctf' | 'hackathon' | 'workshop' | 'talk';
+type Category = 'ctf' | 'hackathon' | 'workshop' | 'talk' | 'visit';
 
 interface EventItem {
   title: string;
@@ -21,7 +21,8 @@ const groups: { id: Category; en: string; pt: string; color: string }[] = [
   { id: 'ctf', en: 'Capture The Flag (CTF)', pt: 'Capture The Flag (CTF)', color: 'bg-accent' },
   { id: 'hackathon', en: 'Hackathons', pt: 'Hackathons', color: 'bg-primary' },
   { id: 'workshop', en: 'Workshops and exercises', pt: 'Oficinas, workshops e simulações', color: 'bg-teal' },
-  { id: 'talk', en: 'Talks', pt: 'Palestras', color: 'bg-amber' },
+  { id: 'talk', en: 'Talks and conferences', pt: 'Palestras e conferências', color: 'bg-amber' },
+  { id: 'visit', en: 'Technical visits and meetups', pt: 'Visitas técnicas e encontros', color: 'bg-muted' },
 ];
 
 const events: EventItem[] = [
@@ -117,6 +118,17 @@ const events: EventItem[] = [
     href: 'https://lnkd.in/p/d3-PkJrK',
   },
   {
+    title: 'Hacking na Web Day 2026',
+    category: 'talk',
+    when: { en: '2026', pt: '2026' },
+    org: 'Hacking na Web · Brasília',
+    description: {
+      en: "Cybersecurity conference in Brasília. I attended with Prof. Lorena Borges and colleagues, representing CtrlAlt+Delas' cyber group, and followed tracks on AI Red Teaming, IoT security and attacks on critical infrastructure.",
+      pt: 'Conferência de segurança cibernética em Brasília. Participei com a professora Lorena Borges e colegas, representando o grupo de cyber do CtrlAlt+Delas, e acompanhei trilhas sobre Red Teaming em IA, segurança em IoT e ataques a infraestruturas críticas.',
+    },
+    href: 'https://lnkd.in/p/du2U93fz',
+  },
+  {
     title: 'CIBERATAQUES: Entendendo e Combatendo o Ransomware',
     category: 'talk',
     org: 'Ramo Estudantil IEEE IDP',
@@ -125,6 +137,26 @@ const events: EventItem[] = [
       pt: 'Palestra de Rafael Salema Marques (SWaNk) sobre como funcionam os ataques de ransomware, seus impactos no mundo real, estratégias e ferramentas de defesa e a ética no ciberespaço.',
     },
     href: 'https://lnkd.in/p/d3gBn3K4',
+  },
+  {
+    title: 'Visita técnica ao datacenter do Banco do Brasil',
+    category: 'visit',
+    org: 'Movimento Mulheres na TI · Banco do Brasil',
+    description: {
+      en: "With CtrlAlt+Delas, IDP's women-in-tech group, I took part — at the invitation of Movimento Mulheres na TI — in a tour of one of Banco do Brasil's cloud hubs at Cidade Digital, Brasília, one of the largest datacenters in Latin America, focused on resilient infrastructure and large-scale data processing.",
+      pt: 'Com o CtrlAlt+Delas, grupo de mulheres em tecnologia do IDP, participei, a convite do Movimento Mulheres na TI, de um tour por um dos polos da nuvem do Banco do Brasil na Cidade Digital, em Brasília, um dos maiores datacenters da América Latina, com foco em infraestrutura resiliente e processamento de dados em larga escala.',
+    },
+    href: 'https://lnkd.in/p/dtNq2rc7',
+  },
+  {
+    title: 'Women in Tech',
+    category: 'visit',
+    org: 'Movimento Mulheres na TI · CyBBer Mulheres · Fortinet',
+    description: {
+      en: "With CtrlAlt+Delas, I took part in Women in Tech, organized by Movimento Mulheres na TI and CyBBer Mulheres in partnership with Fortinet — an event for learning and networking with women working in cybersecurity.",
+      pt: 'Com o CtrlAlt+Delas, participei do Women in Tech, organizado pelo Movimento Mulheres na TI e pelo CyBBer Mulheres em parceria com a Fortinet, um evento de aprendizado e de conexão com mulheres profissionais da área de cibersegurança.',
+    },
+    href: 'https://lnkd.in/p/dkHQkZ74',
   },
 ];
 
@@ -138,10 +170,10 @@ const sections = groups
     <span data-i18n="en">Events</span><span data-i18n="pt">Eventos</span>
   </h1>
   <p class="mt-2.5 text-lg leading-relaxed text-muted" data-i18n="en">
-    Competitions, workshops and talks I took part in, grouped by type.
+    Competitions, workshops, talks and technical visits I took part in, grouped by type.
   </p>
   <p class="mt-2.5 text-lg leading-relaxed text-muted" data-i18n="pt">
-    Competições, oficinas e palestras de que participei, agrupadas por tipo.
+    Competições, oficinas, palestras e visitas técnicas de que participei, agrupadas por tipo.
   </p>
 
   <section class="mt-6 px-5 py-4 bg-accent-soft/40 border border-accent-soft rounded-sm">
