@@ -20,3 +20,7 @@ cyberbullying carried out in Pernambuco.
 
 The material will support the presentations we are bringing to schools,
 with Instituto Gabriel Gastal as the project's pilot partner.
+
+The project gave rise to the paper in preparation
+[“Where the platform cannot reach: a psychosocial proposal for preventing online grooming”](../../pesquisa/onde-a-plataforma-nao-alcanca/),
+developed with Psychology students from GTA/IDP.

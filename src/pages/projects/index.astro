@@ -6,15 +6,15 @@ import { getProjectPairs } from '../../lib/projects';
 const pairs = await getProjectPairs();
 ---
 
-<BaseLayout title="Projects — Larissa Böhm Araújo">
+<BaseLayout title="Repositories — Larissa Böhm Araújo">
   <h1 class="font-display text-4xl font-semibold tracking-tight text-ink">
-    <span data-i18n="en">Projects</span><span data-i18n="pt">Projetos</span>
+    <span data-i18n="en">Repositories</span><span data-i18n="pt">Repositórios</span>
   </h1>
   <p class="mt-2 text-lg text-muted leading-relaxed" data-i18n="en">
-    Research, coursework and competition projects, most recent first.
+    Code repositories and technical projects, most recent first. Academic research is listed under <a href={`${import.meta.env.BASE_URL}pesquisa`} class="link">Research</a>.
   </p>
   <p class="mt-2 text-lg text-muted leading-relaxed" data-i18n="pt">
-    Projetos de pesquisa, de curso e de competições, do mais recente para o mais antigo.
+    Repositórios de código e projetos técnicos, do mais recente para o mais antigo. A pesquisa acadêmica está em <a href={`${import.meta.env.BASE_URL}pesquisa`} class="link">Pesquisa</a>.
   </p>
   <div class="mt-8 border-t-2 border-accent-soft">
     {pairs.map((pair) => <BilingualProjectEntry pair={pair} />)}

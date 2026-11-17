@@ -20,9 +20,9 @@ const statusClass = STATUS_STYLE[enData.status] ?? 'bg-surface text-muted';
 const year = enData.date.getUTCFullYear();
 
 const langs = [
-  { lang: 'en', data: enData, Content: ContentEn, status: status.en, crumb: 'Home', projects: 'Projects',
+  { lang: 'en', data: enData, Content: ContentEn, status: status.en, crumb: 'Home', projects: 'Repositories',
     abstract: 'Abstract', keywords: 'Keywords', code: 'Code', award: 'award' },
-  { lang: 'pt', data: ptData, Content: ContentPt, status: status.pt, crumb: 'Início', projects: 'Projetos',
+  { lang: 'pt', data: ptData, Content: ContentPt, status: status.pt, crumb: 'Início', projects: 'Repositórios',
     abstract: 'Resumo', keywords: 'Palavras-chave', code: 'Código', award: 'premiado' },
 ] as const;
 ---

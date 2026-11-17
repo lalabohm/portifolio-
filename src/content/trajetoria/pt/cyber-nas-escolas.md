@@ -21,3 +21,7 @@ estudo sobre cyberbullying realizado em Pernambuco.
 O material servirá de apoio às apresentações que estamos levando às
 escolas, com o Instituto Gabriel Gastal como parceiro piloto do
 projeto.
+
+O projeto deu origem ao artigo em elaboração
+[“Onde a plataforma não alcança: uma proposta psicossocial de prevenção ao aliciamento online”](../../pesquisa/onde-a-plataforma-nao-alcanca/),
+desenvolvido com estudantes de Psicologia do GTA/IDP.
